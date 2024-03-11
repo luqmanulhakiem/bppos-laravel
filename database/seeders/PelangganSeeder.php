@@ -13,13 +13,15 @@ class PelangganSeeder extends Seeder
      */
     public function run(): void
     {
-         // List Pelanggan
-         $arrayPelanggan = [
-            ['id' => 1, 'nama' => 'Devi','gender' => 'P','telp' => '12231', 'alamat' => 'Jl. Suka Maju', 'level' => '3'],
-            ['id' => 2, 'nama' => 'Laily','gender' => 'P','telp' => '1233231', 'alamat' => 'Jl. Suka Jalan', 'level' => '5'],
+        
+        //  Buat Pelanggan
+        $arrayPelanggan = [
+            ['nama' => 'Devi','gender' => 'P','telp' => '12231', 'alamat' => 'Jl. Suka Maju', 'level' => '3'],
+            ['nama' => 'Laily','gender' => 'P','telp' => '1233231', 'alamat' => 'Jl. Suka Jalan', 'level' => '5']
         ];
-
-        // membuat list supplier sebanyak list diatas
-        Pelanggan::insert($arrayPelanggan);
+        
+        foreach ($arrayPelanggan as $data) {
+            Pelanggan::create($data);
+        }
     }
 }
