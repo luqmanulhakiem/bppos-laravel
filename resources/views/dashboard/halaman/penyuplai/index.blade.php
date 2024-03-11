@@ -65,7 +65,6 @@
                               <td>{{$item->deskripsi}}</td>
                               <td class="text-center">
                                   <div class="btn-group">
-                                    
                                       <a href="{{route('edit-penyuplai', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>
                                       <a href="{{route('hapus-penyuplai', ['id'=> $item->id])}}" data-confirm-delete="true" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus </a>
                                   </div>
