@@ -43,12 +43,16 @@ class AuthController extends Controller
                 // apabila password tidak sama
                 else{
                     // kirim pesan
+                    toastr()->error('Gagal Login');
+
                     return redirect()->back()->withInput()->withErrors(['message' => 'password anda salah']);
                 }
             }
             // kondisi apabila user tidak ditemukan
             else {
                 // kirim pesan
+                toastr()->error('Gagal Login');
+
                 return redirect()->back()->withInput()->withErrors(['message' => 'username tidak ditemukan']);
             }
         }
