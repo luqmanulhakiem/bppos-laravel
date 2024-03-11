@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\SupplierController;
@@ -28,6 +29,25 @@ Route::post('login-request', [AuthController::class, 'login'])->name('request-lo
 Route::group(['middleware' => ['auth', 'statusAkun']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard.dashboard');
+    });
+    Route::group(['prefix' => 'produk'], function () {
+        // Route Kategori
+        Route::controller(KategoriController::class)->group(function (){
+            // index
+            Route::get('kategori', 'index')->name('kategori');
+            // cari
+            Route::get('kategori/search', 'search')->name('cari-kategori');
+            // tampilan tambah
+            Route::get('kategori/tambah', 'create')->name('tambah-kategori');
+            // simpan tambah
+            Route::post('kategori/tambah/simpan', 'store')->name('simpan-kategori');
+            // tampilan edit
+            Route::get('kategori/edit/{id}', 'edit')->name('edit-kategori');
+            // simpan edit
+            Route::post('kategori/edit/{id}/update', 'update')->name('update-kategori');
+            // hapus
+            Route::delete('kategori/hapus/{id}', 'destroy')->name('hapus-kategori');
+        });
     });
     // Route Supplier
     Route::controller(SupplierController::class)->group(function (){

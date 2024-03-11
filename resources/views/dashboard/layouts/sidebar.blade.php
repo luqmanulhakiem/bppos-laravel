@@ -58,8 +58,8 @@
                     </p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+            <li class="nav-item {{ Request::is(['produk/*']) ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Request::is(['produk/*']) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-archive"></i>
                 <p>
                     Produk
@@ -68,7 +68,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="/produk/kategori" class="nav-link {{ Request::is('produk/kategori') ? 'active' : '' }}">
+                    <a href="/produk/kategori" class="nav-link {{ Request::is(['produk/kategori', 'produk/kategori/tambah', 'produk/kategori/edit/*', 'produk/kategori/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Kategori</p>
                     </a>
