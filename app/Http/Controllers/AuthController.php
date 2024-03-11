@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
@@ -25,12 +26,19 @@ class AuthController extends Controller
             if (!empty($find)) {
                 // check password apakah sama dengan yang tersimpan
                 if (Hash::check($data['password'], $find->password)) {
-                    // lakukan login
-                    Auth::attempt(['username' => $data['username'], 'password' => $data['password']]);
+                    if ($find->status == 'enable') {
+                        // lakukan login
+                        Auth::attempt(['username' => $data['username'], 'password' => $data['password']]);
+                        // pesan
+                        toastr()->success('Berhasil Login');
+                        // diarahkan ke dashboard
+                        return redirect('/dashboard');
+                    }
                     // pesan
-                    toastr()->success('Berhasil Login');
+                    toastr()->error('Gagal Login');
+
                     // diarahkan ke dashboard
-                    return redirect('/dashboard');
+                    return back()->withErrors(['message' => 'Akun Anda DiBlokir Silahkan Hubungi Admin']);
                 }
                 // apabila password tidak sama
                 else{

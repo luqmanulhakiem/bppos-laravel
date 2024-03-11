@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ Route::get('/', function () {
 Route::post('login-request', [AuthController::class, 'login'])->name('request-login');
 
 // Route Hanya bisa diakses apabila sudah login
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'statusAkun']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard.dashboard');
     });
@@ -61,6 +62,24 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('pelanggan/edit/{id}/update', 'update')->name('update-pelanggan');
         // hapus
         Route::delete('pelanggan/hapus/{id}', 'destroy')->name('hapus-pelanggan');
+    });
+    // Route Pengguna
+    Route::controller(PenggunaController::class)->group(function (){
+        // index
+        Route::get('pengguna', 'index')->name('pengguna');
+        // cari
+        Route::get('pengguna/search', 'search')->name('cari-pengguna');
+        // tampilan tambah
+        Route::get('pengguna/tambah', 'create')->name('tambah-pengguna');
+        // simpan tambah
+        Route::post('pengguna/tambah/simpan', 'store')->name('simpan-pengguna');
+        // tampilan edit
+        Route::get('pengguna/edit/{id}', 'edit')->name('edit-pengguna');
+        // simpan edit
+        Route::post('pengguna/edit/{id}/update', 'update')->name('update-pengguna');
+        Route::post('pengguna/status/{id}/update', 'updateStatus')->name('status-pengguna');
+        // hapus
+        Route::delete('pengguna/hapus/{id}', 'destroy')->name('hapus-pengguna');
     });
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('request-logout');

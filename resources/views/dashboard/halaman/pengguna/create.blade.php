@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Edit Pelanggan</h1>
+            <h1>Tambah Pengguna</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Edit Pelanggan</li>
+              <li class="breadcrumb-item active">Tambah Pengguna</li>
             </ol>
           </div>
         </div>
@@ -25,45 +25,40 @@
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
           <div class="card-header">
-            <h3 class="card-title">Edit Pelanggan</h3>
+            <h3 class="card-title">Tambah Pengguna</h3>
 
             <div class="card-tools">
-              <a href="/pelanggan" class="btn btn-warning">Kembali</a>
+              <a href="/pengguna" class="btn btn-warning">Kembali</a>
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
-                <form method="POST" action="{{route('update-pelanggan', ['id'=>$data->id])}}">
+                <form method="POST" action="{{route('simpan-pengguna')}}">
                     @csrf
                     <div class="form-group">
-                      <label>Nama Pelanggan<b class="text-danger">*</b></label>
-                      <input type="text" class="form-control" name="nama" placeholder="Nama Pelanggan" value="{{$data->nama}}" required>
+                      <label>Username<b class="text-danger">*</b></label>
+                      <input type="text" class="form-control" name="username" placeholder="Username Pengguna" required>
                     </div>
                     <div class="form-group">
-                      <label>Jenis Kelamin<b class="text-danger">*</b></label>
-                      <select class="form-control select2" style="width: 100%;" name="gender" required>
-                        <option value="L" @if ($data->gender == "L") {{ 'selected' }} @endif>Laki - Laki</option>
-                        <option value="P" @if ($data->gender == "P") {{ 'selected' }} @endif>Perempuan</option>
-                      </select>
+                      <label>Nama Pengguna<b class="text-danger">*</b></label>
+                      <input type="text" class="form-control" name="name" placeholder="Nama Pengguna" required>
                     </div>
                     <div class="form-group">
-                      <label>Telp<b class="text-danger">*</b></label>
-                      <input type="text" class="form-control" name="telp" placeholder="Telp" value="{{$data->telp}}" required>
+                      <label>Password<b class="text-danger">*</b></label>
+                      <input type="text" class="form-control" name="password" placeholder="Pasword Minimal 8 Karakter" required>
                     </div>
                     <div class="form-group">
-                      <label>Alamat<b class="text-danger">*</b></label>
-                      <input type="text" class="form-control" name="alamat" placeholder="Alamat" value="{{$data->alamat}}" required>
+                      <label>Telpon<b class="text-danger">*</b></label>
+                      <input type="text" class="form-control" name="telp" placeholder="Telpon" required>
                     </div>
                     <div class="form-group">
                       <label>Level<b class="text-danger">*</b></label>
                       <select class="form-control select2" style="width: 100%;" name="level" required>
-                        <option value="1" @if ($data->level == "1") {{ 'selected' }} @endif>Reseller 1</option>
-                        <option value="2" @if ($data->level == "2") {{ 'selected' }} @endif>Reseller 2</option>
-                        <option value="3" @if ($data->level == "3") {{ 'selected' }} @endif>Reseller 3</option>
-                        <option value="4" @if ($data->level == "4") {{ 'selected' }} @endif>Reseller 4</option>
-                        <option value="5" @if ($data->level == "5") {{ 'selected' }} @endif>Reseller 5</option>
+                        <option value="isAdmin">Admin</option>
+                        <option value="isKasir">Kasir</option>
+                        <option value="isDesign" >Design</option>
                       </select>
                     </div>
                     <br>

@@ -51,7 +51,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/pelanggan" class="nav-link {{ Request::is('pelanggan') ? 'active' : '' }}">
+                <a href="/pelanggan" class="nav-link {{ Request::is(['pelanggan', 'pelanggan/tambah', 'pelanggan/edit/*', 'pelanggan/search']) ? 'active' : '' }}">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
                     Pelanggan
@@ -125,7 +125,7 @@
 
             <li class="nav-header">Pengaturan</li>
             <li class="nav-item">
-                <a href="/pengguna" class="nav-link {{ Request::is('pengguna') ? 'active' : '' }}">
+                <a href="/pengguna" class="nav-link {{ Request::is(['pengguna', 'pengguna/tambah', 'pengguna/edit/*', 'pengguna/search']) ? 'active' : '' }}">
                     <i class="nav-icon fas fa-users text-orange"></i>
                     <p>
                     Pengguna
