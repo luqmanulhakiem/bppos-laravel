@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,23 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::post('kategori/edit/{id}/update', 'update')->name('update-kategori');
             // hapus
             Route::delete('kategori/hapus/{id}', 'destroy')->name('hapus-kategori');
+        });
+        // Route Satuan
+        Route::controller(SatuanController::class)->group(function (){
+            // index
+            Route::get('satuan', 'index')->name('satuan');
+            // cari
+            Route::get('satuan/search', 'search')->name('cari-satuan');
+            // tampilan tambah
+            Route::get('satuan/tambah', 'create')->name('tambah-satuan');
+            // simpan tambah
+            Route::post('satuan/tambah/simpan', 'store')->name('simpan-satuan');
+            // tampilan edit
+            Route::get('satuan/edit/{id}', 'edit')->name('edit-satuan');
+            // simpan edit
+            Route::post('satuan/edit/{id}/update', 'update')->name('update-satuan');
+            // hapus
+            Route::delete('satuan/hapus/{id}', 'destroy')->name('hapus-satuan');
         });
     });
     // Route Supplier

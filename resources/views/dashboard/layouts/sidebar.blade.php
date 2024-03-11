@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/produk/satuan" class="nav-link {{ Request::is('produk/satuan') ? 'active' : '' }}">
+                    <a href="/produk/satuan" class="nav-link {{ Request::is(['produk/satuan', 'produk/satuan/tambah', 'produk/satuan/edit/*', 'produk/satuan/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Satuan</p>
                     </a>

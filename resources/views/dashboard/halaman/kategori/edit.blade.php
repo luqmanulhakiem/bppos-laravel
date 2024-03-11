@@ -28,7 +28,7 @@
             <h3 class="card-title">Edit Kategori</h3>
 
             <div class="card-tools">
-              <a href="/kategori" class="btn btn-warning">Kembali</a>
+              <a href="{{route('kategori')}}" class="btn btn-warning">Kembali</a>
             </div>
           </div>
           <!-- /.card-header -->

@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Tambah Kategori</h1>
+            <h1>Edit Satuan</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Tambah Kategori</li>
+              <li class="breadcrumb-item active">Edit Satuan</li>
             </ol>
           </div>
         </div>
@@ -25,21 +25,21 @@
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
           <div class="card-header">
-            <h3 class="card-title">Tambah Kategori</h3>
+            <h3 class="card-title">Edit Satuan</h3>
 
             <div class="card-tools">
-              <a href="{{route('kategori')}}" class="btn btn-warning">Kembali</a>
+              <a href="{{route('satuan')}}" class="btn btn-warning">Kembali</a>
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
-                <form method="POST" action="{{route('simpan-kategori')}}">
+                <form method="POST" action="{{route('update-satuan', ['id'=>$data->id])}}">
                     @csrf
                     <div class="form-group">
-                      <label>Nama Kategori<b class="text-danger">*</b></label>
-                      <input type="text" class="form-control" name="nama" placeholder="Nama Kategori" required>
+                      <label>Nama Satuan<b class="text-danger">*</b></label>
+                      <input type="text" class="form-control" name="nama" placeholder="Nama Satuan" value="{{$data->nama}}" required>
                     </div>
                     <br>
                     <button class="btn btn-submit btn-primary float-right"><i class="fa fa-save"></i> Simpan</button>
