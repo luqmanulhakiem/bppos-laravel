@@ -17,8 +17,9 @@ class PelangganController extends Controller
         // mengambil semua data pelanggan dengan membaginya per 10 list data
         $data = Pelanggan::paginate(10);
 
-        $title = 'Delete User!';
-        $text = "Are you sure you want to delete?";
+        // Alert Konfirmasi
+        $title = 'Hapus Pelanggan!';
+        $text = "Apakah Kamu Yakin?";
         confirmDelete($title, $text);
 
         // menampilkan data yang sudah diambil ke tampilan
@@ -131,20 +132,6 @@ class PelangganController extends Controller
             return back();
         }
 
-    }
-
-    /**
-     * Modal Delete 
-     */
-    public function modalDestroy(string $id)
-    {
-        $data = Pelanggan::findorfail($id);
-
-
-        $title = 'Delete User!';
-        $text = "Are you sure you want to delete?";
-        confirmDelete($title, $text);
-        return view('dashboard.halaman.pelanggan.index', compact('data'));
     }
 
     /**

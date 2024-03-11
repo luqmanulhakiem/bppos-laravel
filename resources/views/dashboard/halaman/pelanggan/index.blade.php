@@ -68,29 +68,7 @@
                               <td class="text-center">
                                   <div class="btn-group">
                                       <a href="{{route('edit-pelanggan', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>
-                                      <a href="{{ route('alert-pelanggan', ['id' => $item->id]) }}" class="btn btn-danger">Hapus</a>
-                                      <a href="{{ route('alert-pelanggan', $item->id) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>
-
-                                      {{-- <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i> Hapus</button> --}}
-                                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus {{$item->nama}} {{$item->id}}</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Apakah Anda yakin ingin menghapus item ini?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                        <a href="{{ route('hapus-pelanggan', ['id' => $item->id]) }}" class="btn btn-danger">Hapus</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                      <a href="{{ route('hapus-pelanggan', $item->id) }}" class="btn btn-sm btn-danger" data-confirm-delete="true"><i class="fa fa-trash"></i> Delete</a>
                                   </div>
                               </td>
                           </tr>

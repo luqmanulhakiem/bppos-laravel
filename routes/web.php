@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
         // simpan edit
         Route::post('penyuplai/edit/{id}/update', 'update')->name('update-penyuplai');
         // hapus
-        Route::get('penyuplai/hapus/{id}', 'destroy')->name('hapus-penyuplai');
+        Route::delete('penyuplai/hapus/{id}', 'destroy')->name('hapus-penyuplai');
     });
     // Route Pelanggan
     Route::controller(PelangganController::class)->group(function (){
@@ -60,8 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
         // simpan edit
         Route::post('pelanggan/edit/{id}/update', 'update')->name('update-pelanggan');
         // hapus
-        Route::get('pelanggan/hapus/alert/{id}', 'modalDestroy')->name('alert-pelanggan');
-        Route::get('pelanggan/hapus/{id}', 'destroy')->name('hapus-pelanggan');
+        Route::delete('pelanggan/hapus/{id}', 'destroy')->name('hapus-pelanggan');
     });
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('request-logout');

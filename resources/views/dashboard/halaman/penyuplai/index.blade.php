@@ -66,31 +66,7 @@
                               <td class="text-center">
                                   <div class="btn-group">
                                       <a href="{{route('edit-penyuplai', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>
-                                      <form action="{{ route('hapus-penyuplai', ['id' => $item->id]) }}" method="GET">
-                                        @csrf
-                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i> Hapus</button>
-                                      
-                                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Apakah Anda yakin ingin menghapus item ini?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-danger">Hapus</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                      {{-- <a href="{{route('hapus-penyuplai', ['id'=> $item->id])}}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus </a> --}}
+                                      <a href="{{route('hapus-penyuplai', ['id'=> $item->id])}}" data-confirm-delete="true" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus </a>
                                   </div>
                               </td>
                           </tr>

@@ -18,6 +18,12 @@ class SupplierController extends Controller
         // mengambil semua data supplier dengan membaginya per 10 list data
         $data = Supplier::paginate(10);
 
+        
+        // Alert Konfirmasi
+        $title = 'Hapus Pelanggan!';
+        $text = "Apakah Kamu Yakin?";
+        confirmDelete($title, $text);
+
         // menampilkan data yang sudah diambil ke tampilan
         return view('dashboard.halaman.penyuplai.index', compact('data'));
     }
