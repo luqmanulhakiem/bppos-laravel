@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group">
                       <label>Password<b class="text-danger">*</b></label>
-                      <input type="text" class="form-control" name="password" placeholder="Pasword Minimal 8 Karakter" required>
+                      <input type="password" class="form-control" name="password" placeholder="Pasword Minimal 8 Karakter" required>
                     </div>
                     <div class="form-group">
                       <label>Telpon<b class="text-danger">*</b></label>

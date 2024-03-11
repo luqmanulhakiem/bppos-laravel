@@ -162,6 +162,43 @@ class PenggunaController extends Controller
     }
 
     /**
+     * Halaman Ganti Password
+     */
+    public function changePass(string $id)
+    {
+        // cari data yang akan di edit berdasarkan id
+        $data = User::findorfail($id);
+
+        return view('dashboard.halaman.pengguna.password', compact('data'));
+    }
+
+    /**
+     * Ganti Password
+    */
+    public function updatePass(Request $request, string $id)
+    {
+        // request
+        $password = Hash::make($request->password);
+
+        // cari data yang akan di edit berdasarkan id
+        $find = User::where('id', $id)->first();
+
+        // perubahan password
+        $dt = [
+            'password' => $password
+        ];
+
+        // update password
+        $find->update($dt);
+
+        // notifikasi
+        toastr()->success('Berhasil Mengubah password');
+
+        // kembali
+        return redirect()->route('pengguna');
+    }
+
+    /**
      * Hapus Data.
      */
     public function destroy(string $id)

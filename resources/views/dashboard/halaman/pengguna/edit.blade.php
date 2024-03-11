@@ -28,7 +28,10 @@
             <h3 class="card-title">Edit Pengguna</h3>
 
             <div class="card-tools">
-              <a href="/pengguna" class="btn btn-warning">Kembali</a>
+              <div class="button-group">
+                <a href="{{route('ganti.password-pengguna', $data->id)}}" class="btn btn-primary"><i class="fa fa-pen"></i> Ganti Password</a>
+                <a href="/pengguna" class="btn btn-warning">Kembali</a>
+              </div>
             </div>
           </div>
           <!-- /.card-header -->

@@ -78,6 +78,8 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
         // simpan edit
         Route::post('pengguna/edit/{id}/update', 'update')->name('update-pengguna');
         Route::post('pengguna/status/{id}/update', 'updateStatus')->name('status-pengguna');
+        Route::get('pengguna/password/{id}', 'changePass')->name('ganti.password-pengguna');
+        Route::post('pengguna/password/{id}/update', 'updatePass')->name('password-pengguna');
         // hapus
         Route::delete('pengguna/hapus/{id}', 'destroy')->name('hapus-pengguna');
     });
