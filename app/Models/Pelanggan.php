@@ -15,7 +15,7 @@ class Pelanggan extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->kode = IdGenerator::generate(['table' => 'pelanggans','field' => 'kode', 'length' => 20, 'prefix' =>'BPC-']);
+            $model->kode = IdGenerator::generate(['table' => 'pelanggans','field' => 'kode', 'length' => 8, 'prefix' =>'BPC-']);
         });
     }
 

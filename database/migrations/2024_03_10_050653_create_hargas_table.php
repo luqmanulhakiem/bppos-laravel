@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('hargas', function (Blueprint $table) {
             $table->id();
+            $table->integer('umum');
+            $table->integer('reseller1');
+            $table->integer('reseller2');
+            $table->integer('reseller3');
+            $table->integer('reseller4');
             $table->timestamps();
         });
     }

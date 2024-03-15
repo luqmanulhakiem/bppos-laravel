@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
+            $table->string('kode');
+            $table->string('nama');
+            $table->enum('jenis', ['1','2']); //1 = Buah(X Lembar), 2 = Dimens(X Ukuran)
+            $table->integer('stok')->default('0');
+            $table->bigInteger('id_kategori')->constrained('kategoris')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->bigInteger('id_satuan')->constrained('units')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->bigInteger('id_harga')->constrained('hargas')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
