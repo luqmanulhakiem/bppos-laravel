@@ -15,7 +15,7 @@ class PelangganController extends Controller
     public function index()
     {
         // mengambil semua data pelanggan dengan membaginya per 10 list data
-        $data = Pelanggan::paginate(10);
+        $data = Pelanggan::latest()->paginate(10);
 
         // Alert Konfirmasi
         $title = 'Hapus Pelanggan!';

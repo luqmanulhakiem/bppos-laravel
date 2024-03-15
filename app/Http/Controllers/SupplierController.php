@@ -16,7 +16,7 @@ class SupplierController extends Controller
     public function index()
     {
         // mengambil semua data supplier dengan membaginya per 10 list data
-        $data = Supplier::paginate(10);
+        $data = Supplier::latest()->paginate(10);
 
         
         // Alert Konfirmasi

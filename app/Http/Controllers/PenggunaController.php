@@ -16,7 +16,7 @@ class PenggunaController extends Controller
     public function index()
     {
         // mengambil semua data pengguna dengan membaginya per 10 list data
-        $data = User::paginate(10);
+        $data = User::latest()->paginate(10);
 
         // Alert Konfirmasi
         $title = 'Hapus Pengguna!';

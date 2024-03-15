@@ -15,7 +15,7 @@ class KategoriController extends Controller
     public function index()
     {
         // mengambil semua data supplier dengan membaginya per 10 list data
-        $data = Kategori::paginate(10);
+        $data = Kategori::latest()->paginate(10);
 
         
         // Alert Konfirmasi
