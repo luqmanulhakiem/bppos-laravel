@@ -5,11 +5,25 @@ namespace App\Models;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Barang extends Model
 {
     use HasFactory;
     protected $fillable = ['kode', 'nama', 'jenis', 'stok', 'id_kategori', 'id_satuan', 'id_harga'];
+
+    public function kategori(): HasOne
+    {
+        return $this->hasOne(Kategori::class, 'id', 'id_kategori');
+    }
+    public function satuan(): HasOne
+    {
+        return $this->hasOne(Unit::class, 'id', 'id_satuan');
+    }
+    public function harga(): HasOne
+    {
+        return $this->hasOne(Harga::class, 'id', 'id_harga');
+    }
 
     public static function boot()
     {
