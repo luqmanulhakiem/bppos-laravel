@@ -80,13 +80,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/produk/barang" class="nav-link {{ Request::is('produk/barang') ? 'active' : '' }}">
+                    <a href="/produk/barang" class="nav-link {{ Request::is(['produk/barang', 'produk/barang/tambah', 'produk/barang/edit/*', 'produk/barang/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Barang</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/produk/harga" class="nav-link {{ Request::is('produk/harga') ? 'active' : '' }}">
+                    <a href="/produk/harga" class="nav-link {{ Request::is(['produk/harga', 'produk/harga/tambah', 'produk/harga/edit/*', 'produk/harga/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Harga</p>
                     </a>
