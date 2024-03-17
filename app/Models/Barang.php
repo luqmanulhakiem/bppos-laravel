@@ -14,15 +14,15 @@ class Barang extends Model
 
     public function kategori(): HasOne
     {
-        return $this->hasOne(Kategori::class, 'id', 'id_kategori');
+        return $this->hasOne(Kategori::class,'id', 'id_kategori', 'id');
     }
     public function satuan(): HasOne
     {
-        return $this->hasOne(Unit::class, 'id', 'id_satuan');
+        return $this->hasOne(Unit::class,'id', 'id_satuan', 'id');
     }
     public function harga(): HasOne
     {
-        return $this->hasOne(Harga::class, 'id', 'id_harga');
+        return $this->hasOne(Harga::class,'id', 'id_harga', 'id');
     }
 
     public static function boot()

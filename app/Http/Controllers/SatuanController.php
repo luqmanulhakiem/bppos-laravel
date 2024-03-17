@@ -15,8 +15,7 @@ class SatuanController extends Controller
     public function index()
     {
         // mengambil semua data supplier dengan membaginya per 10 list data
-        $data = Unit::latest()->paginate(10);
-
+        $data = Unit::withCount('barang')->latest()->paginate(10);
         
         // Alert Konfirmasi
         $title = 'Hapus Satuan!';

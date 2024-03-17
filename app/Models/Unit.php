@@ -13,6 +13,6 @@ class Unit extends Model
 
     public function barang(): BelongsTo
     {
-        return $this->belongsTo(Barang::class, 'id_satuan', 'id');
+        return $this->belongsTo(Barang::class, 'id', 'id_satuan');
     }
 }

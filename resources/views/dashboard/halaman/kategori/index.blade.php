@@ -58,7 +58,7 @@
                           <tr>
                               <td>{{$number++}}</td>
                               <td>{{$item->nama}}</td>
-                              <td>-</td>
+                              <td>{{$item->barang_count}} Barang terkait</td>
                               <td class="text-center">
                                   <div class="btn-group">
                                       <a href="{{route('edit-kategori', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>

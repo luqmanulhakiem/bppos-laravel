@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KategoriRequest;
+use App\Models\Barang;
 use App\Models\Kategori;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -15,9 +16,8 @@ class KategoriController extends Controller
     public function index()
     {
         // mengambil semua data supplier dengan membaginya per 10 list data
-        $data = Kategori::latest()->paginate(10);
+        $data = Kategori::withCount('barang')->latest()->paginate(10);
 
-        
         // Alert Konfirmasi
         $title = 'Hapus Kategori!';
         $text = "Apakah Kamu Yakin?";

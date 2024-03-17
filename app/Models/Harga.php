@@ -13,6 +13,6 @@ class Harga extends Model
     
     public function barang(): BelongsTo
     {
-        return $this->belongsTo(Barang::class, 'id_harga', 'id');
+        return $this->belongsTo(Barang::class, 'id', 'id_harga');
     }
 }
