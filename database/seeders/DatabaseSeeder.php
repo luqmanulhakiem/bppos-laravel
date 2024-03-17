@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             KategoriSeeder::class,
             UnitSeeder::class,
             BarangSeeder::class,
+            BarangInOutSeeder::class,
         ]);
     }
 }

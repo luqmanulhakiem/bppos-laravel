@@ -27,6 +27,7 @@ class BarangSeeder extends Seeder
             'jenis' => '1',
             'id_kategori'=> '1',
             'id_satuan' => '1',
+            'stok' => '9',
             'id_harga' => $harga->id
         ]);
     }

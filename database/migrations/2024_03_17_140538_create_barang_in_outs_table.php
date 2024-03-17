@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('barang_in_outs', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
+            $table->bigInteger('id_barang')->constrained('barangs')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->bigInteger('id_penyuplai')->constrained('suppliers')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->bigInteger('id_user')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->integer('kuantiti');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
