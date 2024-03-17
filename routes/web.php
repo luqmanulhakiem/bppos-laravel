@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
@@ -65,6 +66,23 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::post('satuan/edit/{id}/update', 'update')->name('update-satuan');
             // hapus
             Route::delete('satuan/hapus/{id}', 'destroy')->name('hapus-satuan');
+        });
+        // Route Barang
+        Route::controller(BarangController::class)->group(function (){
+            // index
+            Route::get('barang', 'index')->name('barang');
+            // cari
+            Route::get('barang/search', 'search')->name('cari-barang');
+            // tampilan tambah
+            Route::get('barang/tambah', 'create')->name('tambah-barang');
+            // // simpan tambah
+            Route::post('barang/tambah/simpan', 'store')->name('simpan-barang');
+            // // tampilan edit
+            Route::get('barang/edit/{id}', 'edit')->name('edit-barang');
+            // // simpan edit
+            Route::post('barang/edit/{id}/update', 'update')->name('update-barang');
+            // // hapus
+            Route::delete('barang/hapus/{id}', 'destroy')->name('hapus-barang');
         });
     });
     // Route Supplier
