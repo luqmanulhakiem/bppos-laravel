@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
@@ -83,6 +84,17 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::post('barang/edit/{id}/update', 'update')->name('update-barang');
             // // hapus
             Route::delete('barang/hapus/{id}', 'destroy')->name('hapus-barang');
+        });
+        // Route harga
+        Route::controller(HargaController::class)->group(function (){
+            // index
+            Route::get('harga', 'index')->name('harga');
+            // cari
+            Route::get('harga/search', 'search')->name('cari-harga');
+            // // tampilan edit
+            Route::get('harga/edit/{id}', 'edit')->name('edit-harga');
+            // // simpan edit
+            Route::post('harga/edit/{id}/update', 'update')->name('update-harga');
         });
     });
     // Route Supplier

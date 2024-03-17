@@ -53,8 +53,6 @@ class BarangController extends Controller
             });
         })->paginate(10);
 
-        echo($data);
-
         // menampilkan data yang sudah diambil ke tampilan
         return view('dashboard.halaman.barang.index', compact('data'));
 
