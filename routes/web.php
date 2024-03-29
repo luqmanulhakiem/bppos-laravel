@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
@@ -97,6 +98,21 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::post('harga/edit/{id}/update', 'update')->name('update-harga');
         });
     });
+    Route::group(['prefix' => 'transaksi'], function () {
+         // Route Barang Masuk
+         Route::controller(BarangMasukController::class)->group(function (){
+            // index
+            Route::get('barang-masuk', 'index')->name('barang-masuk');
+            // cari
+            Route::get('barang-masuk/search', 'search')->name('cari-barang-masuk');
+            // tampilan tambah
+            Route::get('barang-masuk/tambah', 'create')->name('tambah-barang-masuk');
+            // // tampilan edit
+            // Route::get('barang-masuk/edit/{id}', 'edit')->name('edit-barang-masuk');
+            // // simpan edit
+            // Route::post('barang-masuk/edit/{id}/update', 'update')->name('update-barang-masuk');
+        });
+    });
     // Route Supplier
     Route::controller(SupplierController::class)->group(function (){
         // index
@@ -154,3 +170,5 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('request-logout');
 });
+
+Route::get('barang-masuk/tambah/cari',[BarangMasukController::class, 'searchBarang'])->name('tambah-barang-masuk.cari');

@@ -22,13 +22,31 @@ class BarangSeeder extends Seeder
             'reseller4' => '40000',
         ]);
 
+        $harga2 = Harga::create([
+            'umum' => '80000',
+            'reseller1' => '10000',
+            'reseller2' => '20000',
+            'reseller3' => '30000',
+            'reseller4' => '40000',
+        ]);
+
         Barang::create([
-            'nama' => 'Fly Over',
+            'nama' => 'Art Paper',
             'jenis' => '1',
             'id_kategori'=> '1',
             'id_satuan' => '1',
             'stok' => '9',
             'id_harga' => $harga->id
+        ]);
+
+        Barang::create([
+            'nama' => 'Fly Over',
+            'jenis' => '2',
+            'id_kategori'=> '1',
+            'id_satuan' => '1',
+            'stok_p' => '9',
+            'stok_l' => '10',
+            'id_harga' => $harga2->id
         ]);
     }
 }

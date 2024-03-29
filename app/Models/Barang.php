@@ -5,6 +5,7 @@ namespace App\Models;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Barang extends Model
@@ -23,6 +24,11 @@ class Barang extends Model
     public function harga(): HasOne
     {
         return $this->hasOne(Harga::class,'id', 'id_harga', 'id');
+    }
+
+    public function barangInOut(): BelongsTo
+    {
+        return $this->belongsTo(BarangInOut::class, 'id', 'id_barang');
     }
 
     public static function boot()

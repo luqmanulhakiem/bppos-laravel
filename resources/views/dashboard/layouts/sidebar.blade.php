@@ -93,8 +93,8 @@
                 </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+            <li class="nav-item {{ Request::is(['transaksi/*']) ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Request::is(['transaksi/*']) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-shopping-cart"></i>
                 <p>
                     Transaksi
@@ -109,7 +109,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/transaksi/barang-masuk" class="nav-link {{ Request::is('transaksi/barang-masuk') ? 'active' : '' }}">
+                    <a href="/transaksi/barang-masuk" class="nav-link {{ Request::is(['transaksi/barang-masuk', 'transaksi/barang-masuk/tambah', 'transaksi/barang-masuk/show/*', 'transaksi/barang-masuk/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Barang Masuk</p>
                     </a>
