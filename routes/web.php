@@ -9,6 +9,7 @@ use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -196,6 +197,11 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
         Route::post('pengguna/password/{id}/update', 'updatePass')->name('password-pengguna');
         // hapus
         Route::delete('pengguna/hapus/{id}', 'destroy')->name('hapus-pengguna');
+    });
+    // Route Profil
+    Route::controller(ProfilController::class)->group(function (){
+        // index
+        Route::get('profile', 'index')->name('profile');
     });
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('request-logout');
