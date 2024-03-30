@@ -138,7 +138,6 @@ class BarangKeluarController extends Controller
         
         return response()->json($detail);
         // return view
-
     }
 
     public function destroy(string $id)

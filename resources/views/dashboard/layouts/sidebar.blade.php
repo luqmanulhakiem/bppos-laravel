@@ -122,6 +122,29 @@
                 </li>
                 </ul>
             </li>
+            <li class="nav-item {{ Request::is(['laporan/*']) ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Request::is(['laporan/*']) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                    Laporan
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="/laporan/penjualan" class="nav-link {{ Request::is('laporan/penjualan') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Penjualan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/laporan/barang" class="nav-link {{ Request::is(['laporan/barang', 'laporan/barang/search']) ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Barang Masuk/Keluar</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
 
             <li class="nav-header">Pengaturan</li>
             <li class="nav-item">

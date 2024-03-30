@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangInOutController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\HargaController;
@@ -129,6 +130,17 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::get('barang-keluar/detail/{id}', 'show')->name('detail-barang-keluar');
             // hapus
             Route::delete('barang-keluar/hapus/{id}', 'destroy')->name('hapus-barang-keluar');
+        });
+    });
+     Route::group(['prefix' => 'laporan'], function () {
+         // Route Barang Keluar
+         Route::controller(BarangInOutController::class)->group(function (){
+            // index
+            Route::get('barang', 'index')->name('barang');
+            // cari
+            Route::get('barang/search', 'search')->name('cari-barang');
+            // detail
+            Route::get('barang/detail/{id}', 'show')->name('detail-barang');
         });
     });
     // Route Supplier
