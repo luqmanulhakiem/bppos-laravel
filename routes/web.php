@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangInOutController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
@@ -202,9 +203,22 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
     Route::controller(ProfilController::class)->group(function (){
         // index
         Route::get('profile', 'index')->name('profile');
+        // update profil
         Route::post('profile/update', 'updateProfil')->name('profile.update');
+        // update akun
         Route::post('profile/update-akun', 'updateAkun')->name('profile.update-akun');
+        // update foto
         Route::post('profile/update-foto', 'updateFoto')->name('profile.update-foto');
+    });
+    Route::controller(ConfigurationController::class)->group(function (){
+        // index
+        Route::get('konfigurasi', 'index')->name('konfigurasi');
+        // // update profil
+        // Route::post('konfigurasi/update', 'updateProfil')->name('konfigurasi.update');
+        // // update akun
+        // Route::post('konfigurasi/update-akun', 'updateAkun')->name('konfigurasi.update-akun');
+        // // update foto
+        // Route::post('konfigurasi/update-foto', 'updateFoto')->name('konfigurasi.update-foto');
     });
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('request-logout');

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UnitSeeder::class,
             BarangSeeder::class,
             BarangInOutSeeder::class,
+            ConfigurationSeeder::class,
         ]);
     }
 }
