@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class BarangInOut extends Model
 {
     use HasFactory;
-    protected $fillable = ['tanggal', 'id_barang', 'id_penyuplai', 'id_user', 'kuantiti', 'keterangan'];
+    protected $fillable = ['tanggal', 'id_barang', 'id_penyuplai', 'id_user', 'kuantiti', 'keterangan', 'ukuran', 'ukuran_p', 'ukuran_l', 'status'];
 
     public function barang(): HasOne
     {

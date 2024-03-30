@@ -20,19 +20,31 @@ class BarangInOutSeeder extends Seeder
                 'id_barang' => '1',
                 'id_penyuplai' => '1',
                 'id_user' => '1',
-                'kuantiti' => '10',
-                'keterangan' => 'masuk',
+                'ukuran' => 'Pcs/Unit',
+                'kuantiti' => '9',
+                'status' => 'masuk',
             ],
             [
                 'tanggal' => Carbon::now(),
                 'id_barang' => '1',
                 'id_penyuplai' => '1',
                 'id_user' => '1',
+                'ukuran' => 'Pcs/Unit',
                 'kuantiti' => '2',
-                'keterangan' => 'keluar',
+                'status' => 'keluar',
             ]
         ];
 
         BarangInOut::insert($arrayData);
+
+        BarangInOut::create([
+            'tanggal' => Carbon::now(),
+            'id_barang' => '1',
+            'id_penyuplai' => '1',
+            'id_user' => '1',
+            'ukuran' => 'Pcs/Unit',
+            'kuantiti' => '10',
+            'status' => 'masuk',
+        ]);
     }
 }

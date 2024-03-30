@@ -17,8 +17,12 @@ return new class extends Migration
             $table->bigInteger('id_barang')->constrained('barangs')->cascadeOnUpdate()->cascadeOnDelete();
             $table->bigInteger('id_penyuplai')->constrained('suppliers')->cascadeOnUpdate()->cascadeOnDelete();
             $table->bigInteger('id_user')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('ukuran')->nullable();
+            $table->integer('ukuran_p')->nullable();
+            $table->integer('ukuran_l')->nullable();
             $table->integer('kuantiti');
-            $table->string('keterangan');
+            $table->enum('status', ["masuk", "keluar"]);
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

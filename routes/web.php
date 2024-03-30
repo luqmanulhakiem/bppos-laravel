@@ -107,10 +107,11 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::get('barang-masuk/search', 'search')->name('cari-barang-masuk');
             // tampilan tambah
             Route::get('barang-masuk/tambah', 'create')->name('tambah-barang-masuk');
-            // // tampilan edit
-            // Route::get('barang-masuk/edit/{id}', 'edit')->name('edit-barang-masuk');
-            // // simpan edit
-            // Route::post('barang-masuk/edit/{id}/update', 'update')->name('update-barang-masuk');
+            // simpan tambah
+            Route::post('barang-masuk/store', 'store')->name('simpan-barang-masuk');
+            Route::get('barang-masuk/detail/{id}', 'show')->name('detail-barang-masuk');
+            // hapus
+            Route::delete('barang-masuk/hapus/{id}', 'destroy')->name('hapus-barang-masuk');
         });
     });
     // Route Supplier

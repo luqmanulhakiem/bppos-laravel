@@ -14,7 +14,7 @@ class BarangMasukController extends Controller
      */
     public function index()
     {
-        $data = BarangInOut::with(['barang', 'penyuplai', 'user'])->where('keterangan', 'masuk')->latest()->paginate(10);
+        $data = BarangInOut::with(['barang', 'penyuplai', 'user'])->where('status', 'masuk')->latest()->paginate(10);
 
         // Alert Konfirmasi
         $title = 'Hapus Barang Masuk!';
@@ -34,7 +34,7 @@ class BarangMasukController extends Controller
         $param = $request->param;
         // cari data berdasarkan param
         
-        $data = BarangInOut::with(['barang', 'penyuplai', 'user'])->where('keterangan', 'masuk')
+        $data = BarangInOut::with(['barang', 'penyuplai', 'user'])->where('status', 'masuk')
         ->where(function ($query) use ($param) {
             $query->where('tanggal', 'LIKE', '%' . $param . '%')
             ->orWhere('kuantiti', 'LIKE', '%' . $param . '%')
@@ -68,28 +68,88 @@ class BarangMasukController extends Controller
     /**
      * Simpan Data.
      */
-    // public function store(KategoriRequest $request)
-    // {
-    //     // Periksa Semua Data Inputan
-    //     $data = $request->validated();
+    public function store(Request $request)
+    {
+        // Periksa Semua Data Inputan
+        $tanggal = $request->tanggal;
+        $id_barang = $request->id_barang;
+        $id_penyuplai = $request->id_penyuplai;
+        $id_user = auth()->user()->id;
+        $ukuran = $request->ukuran;
+        $ukuran_p = $request->ukuran_p;
+        $ukuran_l = $request->ukuran_l;
+        $kuantiti = $request->kuantiti;
+        $keterangan = $request->keterangan;
+        $jenis = $request->idJenis;
+        $barang = Barang::where('id', $id_barang)->first();
+        if ($jenis == 1) {
+            $simpan = BarangInOut::create([
+                'tanggal' => $tanggal,
+                'id_barang' => $id_barang,
+                'id_penyuplai' => $id_penyuplai,
+                'id_user' => $id_user,
+                'ukuran' => $ukuran,
+                'kuantiti' => $kuantiti,
+                'status' => 'masuk',
+                'keterangan' => $keterangan,
+            ]);
 
-    //     // membuat data supplier
-    //     $simpan = Kategori::create([
-    //         'nama' => $data['nama'],
-    //     ]);
+            $dt = [
+                'stok' => $barang->stok + $kuantiti
+            ];
+            $barang->update($dt);
+        } else {
+            $simpan = BarangInOut::create([
+                'tanggal' => $tanggal,
+                'id_barang' => $id_barang,
+                'id_penyuplai' => $id_penyuplai,
+                'id_user' => $id_user,
+                'ukuran_p' => $ukuran_p,
+                'ukuran_l' => $ukuran_l,
+                'kuantiti' => $kuantiti,
+                'status' => 'masuk',
+                'keterangan' => $keterangan,
+            ]);
+            $dt = [
+                'stok_p' => $barang->stok_p + $ukuran_p,
+                'stok_l' => $barang->stok_p + $ukuran_l,
+            ];
+            $barang->update($dt);
+            
+        }
 
-    //     // cek kondisi simpan berhasil
-    //     if ($simpan instanceof Model) {
-    //         // pesan
-    //         toastr()->success('Berhasil Menambahkan Data');
-    //         // redirect kehalaman
-    //         return redirect()->route('kategori');
-    //     }
+        // cek kondisi simpan berhasil
+        if ($simpan) {
+            // pesan
+            toastr()->success('Berhasil Menambahkan Data');
+            // redirect kehalaman
+            return redirect()->route('barang-masuk');
+        }else {
+            // pesan gagal
+            toastr()->error('Gagal');
+            // redirect kembali
+            return redirect('/dashboard');
+        }
+    }
 
-    //     // pesan gagal
-    //     toastr()->error('Gagal');
-    //     // redirect kembali
-    //     return back();
+    public function show(string $id)
+    {
+        $detail = BarangInOut::with(['barang', 'penyuplai', 'user'])->where('id', $id)->where('status', 'masuk')->first();
+        
+        return response()->json($detail);
+        // return view
 
-    // }
+    }
+
+    public function destroy(string $id)
+    {
+        // cari barang dan hapus
+        BarangInOut::findorfail($id)->delete();
+
+        // pesan
+        toastr()->warning('Berhasil Menghapus Data');
+
+        // redirect ke halaman awal
+        return back();
+    }
 }
