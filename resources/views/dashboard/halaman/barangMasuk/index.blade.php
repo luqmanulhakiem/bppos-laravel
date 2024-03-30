@@ -124,6 +124,14 @@
                   <td id="detailNama">..</td>
                 </tr>
                 <tr>
+                  <th  class="col-4">Detail</th>
+                  <td id="detailInfo"></td>
+                </tr>
+                <tr>
+                  <th  class="col-4">Penyuplai</th>
+                  <td id="detailPenyuplai"></td>
+                </tr>
+                <tr>
                   <th  class="col-4">Ukuran</th>
                   <td id="detailUkuran">..</td>
                 </tr>
@@ -163,6 +171,8 @@
             // Tampilkan detail barang dalam modal
             $('#detailKode').text(response.barang.kode);
             $('#detailNama').text(response.barang.nama);
+            $('#detailInfo').text(response.keterangan);
+            $('#detailPenyuplai').text(response.penyuplai.nama);
             if (response.ukuran == null) {
               var ukuran = response.ukuran_p + " x " + response.ukuran_l;
               $('#detailUkuran').text(ukuran);

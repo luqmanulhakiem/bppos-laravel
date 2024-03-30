@@ -30,7 +30,7 @@
                         <h3 class="card-title">Riwayat Laporan Barang</h3>
                     </div>
                     <div class="search-bar">
-                      <form class="search-form d-flex align-items-center" method="get" action="{{route('cari-barang-masuk')}}">
+                      <form class="search-form d-flex align-items-center" method="get" action="{{route('cari-barang')}}">
                         <input type="text" class="form-control col-md-2" name="param" placeholder="Cari..." title="Kata Kunci: Masukkan Kata Kunci">
                         <button type="submit" title="Search" class="btn btn-primary btn-sm"> <i class="fa fa-search"></i> </button>
                       </form>
@@ -115,27 +115,35 @@
             <table class="table table-bordered">
                 <tr>
                   <th  class="col-4">Kode</th>
-                  <td id="detailKode">..</td>
+                  <td id="detailKode"></td>
                 </tr>
                 <tr>
                   <th  class="col-4">Nama Barang</th>
-                  <td id="detailNama">..</td>
+                  <td id="detailNama"></td>
+                </tr>
+                <tr>
+                  <th  class="col-4">Detail</th>
+                  <td id="detailInfo"></td>
+                </tr>
+                <tr>
+                  <th  class="col-4">Penyuplai</th>
+                  <td id="detailPenyuplai"></td>
                 </tr>
                 <tr>
                   <th  class="col-4">Ukuran</th>
-                  <td id="detailUkuran">..</td>
+                  <td id="detailUkuran"></td>
                 </tr>
                 <tr>
                   <th  class="col-4">Kuantitas</th>
-                  <td id="detailKuantitas">..</td>
+                  <td id="detailKuantitas"></td>
                 </tr>
                 <tr>
                   <th  class="col-4">Tanggal</th>
-                  <td id="detailTanggal">..</td>
+                  <td id="detailTanggal"></td>
                 </tr>
                 <tr>
                   <th  class="col-4">User</th>
-                  <td id="detailUser">..</td>
+                  <td id="detailUser"></td>
                 </tr>
             </table>
           </div>
@@ -161,6 +169,8 @@
             // Tampilkan detail barang dalam modal
             $('#detailKode').text(response.barang.kode);
             $('#detailNama').text(response.barang.nama);
+            $('#detailInfo').text(response.keterangan);
+            $('#detailPenyuplai').text(response.penyuplai.nama);
             if (response.ukuran == null) {
               var ukuran = response.ukuran_p + " x " + response.ukuran_l;
               $('#detailUkuran').text(ukuran);
