@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
@@ -109,9 +110,25 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::get('barang-masuk/tambah', 'create')->name('tambah-barang-masuk');
             // simpan tambah
             Route::post('barang-masuk/store', 'store')->name('simpan-barang-masuk');
+            // detail
             Route::get('barang-masuk/detail/{id}', 'show')->name('detail-barang-masuk');
             // hapus
             Route::delete('barang-masuk/hapus/{id}', 'destroy')->name('hapus-barang-masuk');
+        });
+         // Route Barang Keluar
+         Route::controller(BarangKeluarController::class)->group(function (){
+            // index
+            Route::get('barang-keluar', 'index')->name('barang-keluar');
+            // cari
+            Route::get('barang-keluar/search', 'search')->name('cari-barang-keluar');
+            // tampilan tambah
+            Route::get('barang-keluar/tambah', 'create')->name('tambah-barang-keluar');
+            // simpan tambah
+            Route::post('barang-keluar/store', 'store')->name('simpan-barang-keluar');
+            // detail
+            Route::get('barang-keluar/detail/{id}', 'show')->name('detail-barang-keluar');
+            // hapus
+            Route::delete('barang-keluar/hapus/{id}', 'destroy')->name('hapus-barang-keluar');
         });
     });
     // Route Supplier

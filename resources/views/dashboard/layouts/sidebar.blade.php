@@ -115,7 +115,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/transaksi/barang-keluar" class="nav-link {{ Request::is('transaksi/barang-keluar') ? 'active' : '' }}">
+                    <a href="/transaksi/barang-keluar" class="nav-link {{ Request::is(['transaksi/barang-keluar', 'transaksi/barang-keluar/tambah', 'transaksi/barang-keluar/show/*', 'transaksi/barang-keluar/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Barang Keluar</p>
                     </a>

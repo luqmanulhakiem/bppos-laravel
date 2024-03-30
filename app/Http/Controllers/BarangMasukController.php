@@ -128,7 +128,7 @@ class BarangMasukController extends Controller
             // pesan gagal
             toastr()->error('Gagal');
             // redirect kembali
-            return redirect('/dashboard');
+            return redirect()->back();
         }
     }
 
