@@ -9,10 +9,14 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+            @if (auth()->user()->user_foto == null)
+            <img src="{{asset('assets/dist/img/avatar.jpg')}}" class="img-circle elevation-2" alt="User Image">
+            @else
+                <img style="height: 30px; width: 30px" src="{{asset('storage/fotoUser/' . auth()->user()->user_foto)}}" class="img-circle elevation-2" alt="User Image">
+            @endif
         </div>
         <div class="info col">
-            <a href="#" class="d-block">{{ auth()->user()->username }}</a>
+            <a href="{{route('profile')}}" class="d-block">{{ auth()->user()->username }}</a>
             <a href="#" class="d-block"><i class="fa fa-circle text-green"></i>  Online</a>
         </div>
       </div>

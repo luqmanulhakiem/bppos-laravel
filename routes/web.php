@@ -202,6 +202,9 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
     Route::controller(ProfilController::class)->group(function (){
         // index
         Route::get('profile', 'index')->name('profile');
+        Route::post('profile/update', 'updateProfil')->name('profile.update');
+        Route::post('profile/update-akun', 'updateAkun')->name('profile.update-akun');
+        Route::post('profile/update-foto', 'updateFoto')->name('profile.update-foto');
     });
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('request-logout');
