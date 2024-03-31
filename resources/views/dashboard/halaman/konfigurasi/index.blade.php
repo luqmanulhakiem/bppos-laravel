@@ -28,7 +28,7 @@
                   <div class="card-header bg-primary">
                     Profil
                   </div>
-                  <form method="POST" action="{{route('profile.update')}}">
+                  <form method="POST" action="{{route('konfigurasi.update')}}">
                     @csrf
                     <div class="card-body">
                         @if ($errors->any())
@@ -80,7 +80,7 @@
                   <div class="card-header bg-orange">
                     <p class="text-white m-0">Rekening Perusahaan</p>
                   </div>
-                  <form method="POST" action="{{route('profile.update-akun')}}">
+                  <form method="POST" action="{{route('konfigurasi.update-rekening')}}">
                     @csrf
                   <div class="card-body">
                       @if ($errors->any())
@@ -116,7 +116,7 @@
                   <div class="card-header bg-green">
                     <p class="text-white m-0">Logo Perusahaan</p>
                   </div>
-                  <form method="POST" action="{{route('profile.update-foto')}}" enctype="multipart/form-data">
+                  <form method="POST" action="{{route('konfigurasi.update-logo')}}" enctype="multipart/form-data">
                     @csrf
                   <div class="card-body">
                     @if ($errors->any())
@@ -137,11 +137,11 @@
                         <input type="file" name="logo" required>
                       </div>
                     </div>
-                  <div class="card-footer">
-                    <button class="btn btn-sm bg-green">
-                      <p class="text-white m-0">Update Logo</p>
-                    </button>
-                  </div>
+                    <div class="card-footer">
+                      <button class="btn btn-sm bg-green">
+                        <p class="text-white m-0">Update Logo</p>
+                      </button>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -150,7 +150,7 @@
                   <div class="card-header bg-green">
                     <p class="text-white m-0">Member Card</p>
                   </div>
-                  <form method="POST" action="{{route('profile.update-foto')}}" enctype="multipart/form-data">
+                  <form method="POST" action="{{route('konfigurasi.update-member-card')}}" enctype="multipart/form-data">
                     @csrf
                   <div class="card-body">
                     @if ($errors->any())
@@ -184,7 +184,7 @@
                   <div class="card-header bg-green">
                     <p class="text-white m-0">Logo Nota</p>
                   </div>
-                  <form method="POST" action="{{route('profile.update-foto')}}" enctype="multipart/form-data">
+                  <form method="POST" action="{{route('konfigurasi.update-logo-nota')}}" enctype="multipart/form-data">
                     @csrf
                   <div class="card-body">
                     @if ($errors->any())

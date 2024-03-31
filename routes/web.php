@@ -214,11 +214,15 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
         // index
         Route::get('konfigurasi', 'index')->name('konfigurasi');
         // // update profil
-        // Route::post('konfigurasi/update', 'updateProfil')->name('konfigurasi.update');
-        // // update akun
-        // Route::post('konfigurasi/update-akun', 'updateAkun')->name('konfigurasi.update-akun');
-        // // update foto
-        // Route::post('konfigurasi/update-foto', 'updateFoto')->name('konfigurasi.update-foto');
+        Route::post('konfigurasi/update', 'updateCompanyProfile')->name('konfigurasi.update');
+        // // update rekening
+        Route::post('konfigurasi/update-rekening', 'updateCompanyRekening')->name('konfigurasi.update-rekening');
+        // update logo
+        Route::post('konfigurasi/update-logo', 'updateLogoPT')->name('konfigurasi.update-logo');
+        // update member card
+        Route::post('konfigurasi/update-member-card', 'updateMemberCard')->name('konfigurasi.update-member-card');
+        // update logo nota
+        Route::post('konfigurasi/update-logo-nota', 'updateLogoNota')->name('konfigurasi.update-logo-nota');
     });
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('request-logout');

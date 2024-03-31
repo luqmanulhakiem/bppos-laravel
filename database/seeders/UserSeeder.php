@@ -22,9 +22,9 @@ class UserSeeder extends Seeder
         
         // List User
         $arrayUser = [
-            ['id' => 1, 'username' => 'admin', 'password' => $password, 'name' => 'admin', 'level' => 'isAdmin', 'created_at' => $tanggal, 'updated_at' => $tanggal],
-            ['id' => 2, 'username' => 'kasir', 'password' => $password, 'name' => 'kasir', 'level' => 'isKasir', 'created_at' => $tanggal, 'updated_at' => $tanggal],
-            ['id' => 3, 'username' => 'design', 'password' => $password, 'name' => 'design', 'level' => 'isDesign', 'created_at' => $tanggal, 'updated_at' => $tanggal]
+            ['id' => 1, 'username' => 'admin', 'user_foto' => 'CDN-IMG-FOTO-1.webp' , 'password' => $password, 'name' => 'Bintang Printama', 'level' => 'isAdmin', 'created_at' => $tanggal, 'updated_at' => $tanggal],
+            ['id' => 2, 'username' => 'kasir', 'user_foto' => null, 'password' => $password, 'name' => 'kasir', 'level' => 'isKasir', 'created_at' => $tanggal, 'updated_at' => $tanggal],
+            ['id' => 3, 'username' => 'design','user_foto' => null, 'password' => $password, 'name' => 'design', 'level' => 'isDesign', 'created_at' => $tanggal, 'updated_at' => $tanggal]
         ];
 
         // Membuat akun user sebanyak list user diatas
