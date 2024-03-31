@@ -111,8 +111,8 @@ class BarangKeluarController extends Controller
                 'keterangan' => $keterangan,
             ]);
             $dt = [
-                'stok_p' => $barang->stok_p - $ukuran_p,
-                'stok_l' => $barang->stok_p - $ukuran_l,
+                'stok_p' => $barang->stok_p - ($ukuran_p * $kuantiti),
+                'stok_l' => $barang->stok_p - ($ukuran_l * $kuantiti)
             ];
             $barang->update($dt);
             
