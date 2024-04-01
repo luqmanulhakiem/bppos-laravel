@@ -138,11 +138,11 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
          // Route Barang Keluar
          Route::controller(BarangInOutController::class)->group(function (){
             // index
-            Route::get('barang', 'index')->name('barang');
+            Route::get('barang-in-out', 'index')->name('barang-in-out');
             // cari
-            Route::get('barang/search', 'search')->name('cari-barang');
+            Route::get('barang-in-out/search', 'search')->name('cari-barang-in-out');
             // detail
-            Route::get('barang/detail/{id}', 'show')->name('detail-barang');
+            Route::get('barang-in-out/detail/{id}', 'show')->name('detail-barang-in-out');
         });
     });
     // Route Supplier

@@ -30,7 +30,7 @@
                         <h3 class="card-title">Riwayat Laporan Barang</h3>
                     </div>
                     <div class="search-bar">
-                      <form class="search-form d-flex align-items-center" method="get" action="{{route('cari-barang')}}">
+                      <form class="search-form d-flex align-items-center" method="get" action="{{route('cari-barang-in-out')}}">
                         <input type="text" class="form-control col-md-2" name="param" placeholder="Cari..." title="Kata Kunci: Masukkan Kata Kunci">
                         <button type="submit" title="Search" class="btn btn-primary btn-sm"> <i class="fa fa-search"></i> </button>
                       </form>
@@ -160,7 +160,7 @@
 
         // Lakukan permintaan AJAX untuk mengambil detail barang berdasarkan ID
         $.ajax({
-          url: "{{ route("detail-barang", ['id' => ':id']) }}".replace(':id', id), // Ganti route sesuai dengan route Anda
+          url: "{{ route("detail-barang-in-out", ['id' => ':id']) }}".replace(':id', id), // Ganti route sesuai dengan route Anda
           type: 'GET',
           data: {
             id: id

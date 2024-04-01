@@ -142,7 +142,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/laporan/barang" class="nav-link {{ Request::is(['laporan/barang', 'laporan/barang/search']) ? 'active' : '' }}">
+                    <a href="/laporan/barang-in-out" class="nav-link {{ Request::is(['laporan/barang-in-out', 'laporan/barang-in-out/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Barang Masuk/Keluar</p>
                     </a>
