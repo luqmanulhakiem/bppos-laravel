@@ -23,7 +23,7 @@
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini {{ Request::is(['transaksi/penjualan']) ? 'sidebar-closed sidebar-collapse' : '' }}">
   @include('sweetalert::alert')
 <div class="wrapper">
   <!-- Navbar -->

@@ -10,6 +10,7 @@ use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
@@ -103,6 +104,11 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
         });
     });
     Route::group(['prefix' => 'transaksi'], function () {
+         // Route Penjualan
+         Route::controller(PenjualanController::class)->group(function (){
+            // index
+            Route::get('penjualan', 'index')->name('penjualan');
+        });
          // Route Barang Masuk
          Route::controller(BarangMasukController::class)->group(function (){
             // index
