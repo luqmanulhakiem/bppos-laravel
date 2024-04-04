@@ -66,7 +66,7 @@
                               <td>{{ $item->gender == 'L' ? 'Laki-Laki' : 'Perempuan'}}</td>
                               <td>{{$item->telp}}</td>
                               <td>{{$item->alamat}}</td>
-                              <td>Reseller {{$item->level}}</td>
+                              <td>{{$item->level == "0" ? "Umum" : "Reseller " . $item->level}}</td>
                               <td class="text-center">
                                   <div class="btn-group">
                                       <a href="{{route('edit-pelanggan', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>

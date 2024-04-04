@@ -59,11 +59,11 @@
                     <div class="form-group">
                       <label>Level<b class="text-danger">*</b></label>
                       <select class="form-control select2" style="width: 100%;" name="level" required>
+                        <option value="0" @if ($data->level == "0") {{ 'selected' }} @endif>Umum</option>
                         <option value="1" @if ($data->level == "1") {{ 'selected' }} @endif>Reseller 1</option>
                         <option value="2" @if ($data->level == "2") {{ 'selected' }} @endif>Reseller 2</option>
                         <option value="3" @if ($data->level == "3") {{ 'selected' }} @endif>Reseller 3</option>
                         <option value="4" @if ($data->level == "4") {{ 'selected' }} @endif>Reseller 4</option>
-                        <option value="5" @if ($data->level == "5") {{ 'selected' }} @endif>Reseller 5</option>
                       </select>
                     </div>
                     <br>

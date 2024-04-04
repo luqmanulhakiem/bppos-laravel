@@ -59,11 +59,11 @@
                     <div class="form-group">
                       <label>Level<b class="text-danger">*</b></label>
                       <select class="form-control select2" style="width: 100%;" name="level" required>
+                        <option value="0">Umum</option>
                         <option value="1">Reseller 1</option>
                         <option value="2">Reseller 2</option>
                         <option value="3">Reseller 3</option>
                         <option value="4">Reseller 4</option>
-                        <option value="5">Reseller 5</option>
                       </select>
                     </div>
                     <br>

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('keranjangs', function (Blueprint $table) {
             $table->id();
+            $table->string('id_pelanggan');
+            $table->string('id_barang');
+            $table->string('ukuran');
+            $table->string('harga');
+            $table->string('kuantitas');
+            $table->string('diskon');
+            $table->string('total');
             $table->timestamps();
         });
     }
