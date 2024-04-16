@@ -8,6 +8,17 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      @if (Route::currentRouteName() == 'penjualan')
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#modalKeranjang">
+            <i class="fa fa-shopping-cart">
+              @if ($penjualanCount >= 0)
+                <span class="badge badge-pill badge-primary position-absolute" style="top: 3px; right: 3px;">{{$penjualanCount}}</span>
+              @endif
+            </i>
+        </a>
+      </li>
+      @endif
       <!-- User Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -29,7 +40,6 @@
         <form id="logout-form" action="{{ route('request-logout') }}" method="POST" class="d-none">
             @csrf
         </form>
-
           <div class="dropdown-divider"></div>
           
           <div class="dropdown-divider"></div>

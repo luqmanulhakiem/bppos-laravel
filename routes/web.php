@@ -108,6 +108,18 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
          Route::controller(PenjualanController::class)->group(function (){
             // index
             Route::get('penjualan', 'index')->name('penjualan');
+            // check keranjang
+            Route::post('penjualan/cart-check', 'checkKeranjang')->name('penjualan.cart-check');
+            // tambah keranjang
+            Route::post('penjualan/cart', 'tambahKeranjang')->name('penjualan.cart');
+            // hapus keranjang
+            Route::post('penjualan/cart-hapus', 'hapusKeranjang')->name('penjualan.cart-hapus');
+            // simpan penjualan
+            Route::post('penjualan/store', 'simpanKeranjang')->name('penjualan.store');
+            // simpan ke laporan penjualan
+            Route::get('penjualan/store/{id}', 'saveToLaporan')->name('penjualan.store-selesai');
+            // request
+            Route::get('penjualan/cari-pelanggan', 'cariPelanggan')->name('penjualan.cari-pelanggan');
         });
          // Route Barang Masuk
          Route::controller(BarangMasukController::class)->group(function (){
@@ -235,3 +247,5 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
 });
 
 Route::get('barang-masuk/tambah/cari',[BarangMasukController::class, 'searchBarang'])->name('tambah-barang-masuk.cari');
+Route::get('penjualan/cari/barang',[PenjualanController::class, 'cariBarang'])->name('penjualan.cari-barang');
+Route::get('penjualan/list/barang2',[PenjualanController::class, 'listBarang'])->name('penjualan.list-barang');

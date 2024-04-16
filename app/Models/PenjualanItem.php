@@ -4,19 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Keranjang extends Model
+class PenjualanItem extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_pelanggan',
+        'id_penjualan',
         'id_barang',
         'ukuran',
-        'ukuran_p',
-        'ukuran_l',
+        'ukurran_p',
+        'ukurran_l',
         'harga',
         'kuantitas',
         'diskon',
-        'total'
+        'total',
     ];
+
+    public function penjualan(): BelongsTo
+    {
+        return $this->belongsTo(Penjualan::class);
+    }
+
 }
