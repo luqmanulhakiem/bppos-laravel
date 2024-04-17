@@ -143,7 +143,7 @@ class PenjualanController extends Controller
             $data['status_bayar'] = 'belum';
         }
         $penjualan = Penjualan::create([
-            'no_nota' => $data['no_nota'],
+            'no_nota' => 'BP' . $data['no_nota'],
             'id_pelanggan' => $data['id_pelanggan'],
             'id_kasir' => $idKasir,
             'tgl_penjualan' => $data['tgl_penjualan'],

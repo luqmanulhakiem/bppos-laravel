@@ -640,6 +640,8 @@
               $('#diskon').val(0);
               var grandTotal = response.sub_total - (response.sub_total * 0 / 100);
               $('#grand_total').val(grandTotal);
+              var bayar = $('#bayar').val();
+              $('#sisa').val(bayar - grandTotal);
               $('#grand_total2').text(grandTotal);
   
               // Bersihkan isi tabel sebelum menambahkan data baru
@@ -731,6 +733,8 @@
               $('#diskon').val(0);
               var grandTotal = response.sub_total - (response.sub_total * 0 / 100);
               $('#grand_total').val(grandTotal);
+              var bayar = $('#bayar').val();
+              $('#sisa').val(bayar - grandTotal);
               $('#grand_total2').text(grandTotal);
   
               // Loop melalui setiap data barang dan tambahkan ke tabel
@@ -786,6 +790,8 @@
               $('#diskon').val(0);
               var grandTotal = response.sub_total - (response.sub_total * 0 / 100);
               $('#grand_total').val(grandTotal);
+              var bayar = $('#bayar').val();
+              $('#sisa').val(bayar - grandTotal);
               $('#grand_total2').text(grandTotal);
 
               var number = 1;
