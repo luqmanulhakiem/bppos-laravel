@@ -11,6 +11,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PenjualanLaporanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
@@ -161,6 +162,15 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::get('barang-in-out/search', 'search')->name('cari-barang-in-out');
             // detail
             Route::get('barang-in-out/detail/{id}', 'show')->name('detail-barang-in-out');
+        });
+         // Route Laporan Penjualan
+         Route::controller(PenjualanLaporanController::class)->group(function (){
+            // index
+            Route::get('penjualan', 'index')->name('laporan-penjualan');
+            // cari
+            // Route::get('barang-in-out/search', 'search')->name('cari-barang-in-out');
+            // detail
+            // Route::get('barang-in-out/detail/{id}', 'show')->name('detail-barang-in-out');
         });
     });
     // Route Supplier

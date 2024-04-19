@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penjualan;
 use Illuminate\Http\Request;
 
 class PenjualanLaporanController extends Controller
@@ -11,7 +12,8 @@ class PenjualanLaporanController extends Controller
      */
     public function index()
     {
-        //
+        $data = Penjualan::with('pelanggan')->where('status', 'selesai')->latest()->paginate(10);
+        return view('dashboard.halaman.penjualanLaporan.index', compact('data'));
     }
 
     /**

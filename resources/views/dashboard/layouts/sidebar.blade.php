@@ -136,7 +136,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="/laporan/penjualan" class="nav-link {{ Request::is('laporan/penjualan') ? 'active' : '' }}">
+                    <a href="{{route('laporan-penjualan')}}" class="nav-link {{ Request::is('laporan/penjualan') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Penjualan</p>
                     </a>
