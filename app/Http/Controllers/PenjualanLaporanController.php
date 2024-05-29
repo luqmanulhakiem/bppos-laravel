@@ -6,6 +6,8 @@ use App\Models\Penjualan;
 use App\Models\PenjualanItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class PenjualanLaporanController extends Controller
 {
@@ -22,6 +24,31 @@ class PenjualanLaporanController extends Controller
     {
         $data = Penjualan::with('pelanggan')->where('status', 'selesai')->whereBetween('tgl_penjualan', [$tglawal, $tglakhir])->latest()->paginate(30); 
         return view('dashboard.halaman.penjualanLaporan.index', compact('data'));
+    }
+
+    public function cetak(string $tglawal, string $tglakhir)
+    {
+        if ($tglawal == null) {
+            $carbon = Carbon::now();
+            $tglawal = $carbon->format('Y-m-d');
+            $tglakhir = $carbon->format('Y-m-d');
+        }
+        $data = Penjualan::with('pelanggan')->where('status', 'selesai')->whereBetween('tgl_penjualan', [$tglawal, $tglakhir])->latest()->get();  //Barryvdh\DomPDF\PDF::loadView(): Argument #2 ($data) must be of type array, Illuminate\Database\Eloquent\Collection given, 
+
+        $pdf = Pdf::loadView('dashboard.halaman.penjualanLaporan.cetak', ['data' => $data]);
+        $nama = 'laporan-penjualan ' . $tglawal . '-' . $tglakhir . '.pdf';
+        return $pdf->download($nama);
+    }
+    public function cetak2()
+    {
+            $carbon = Carbon::now();
+            $tglawal = $carbon->format('Y-m-d');
+            $tglakhir = $carbon->format('Y-m-d');
+        $data = Penjualan::with('pelanggan')->where('status', 'selesai')->whereBetween('tgl_penjualan', [$tglawal, $tglakhir])->latest()->get();  //Barryvdh\DomPDF\PDF::loadView(): Argument #2 ($data) must be of type array, Illuminate\Database\Eloquent\Collection given, 
+
+        $pdf = Pdf::loadView('dashboard.halaman.penjualanLaporan.cetak', ['data' => $data]);
+        $nama = 'laporan-penjualan ' . $tglawal . '-' . $tglakhir . '.pdf';
+        return $pdf->download($nama);
     }
 
     /**

@@ -53,7 +53,7 @@
                       </div>
                     </div>
                     <div class="row">
-                          <a href="" onclick="this.href='/laporan-tgl/'+ document.getElementById('tglawal').value +
+                          <a href="" target="_blank" onclick="this.href='/laporan/penjualan-cetak/'+ document.getElementById('tglawal').value +
                                 '/' + document.getElementById('tglakhir').value " class="btn bg-pink ">
                                 Download Laporan PDF
                             </a>

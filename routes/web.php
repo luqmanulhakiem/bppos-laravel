@@ -176,6 +176,8 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             // index
             Route::get('penjualan', 'index')->name('laporan-penjualan');
             Route::get('penjualan/{tglawal}/{tglakhir}', 'indexDate')->name('laporan-penjualan.range');
+            Route::get('penjualan-cetak/{tglawal}/{tglakhir}', 'cetak')->name('laporan-penjualan.cetak');
+            Route::get('penjualan-cetak//', 'cetak2')->name('laporan-penjualan.cetak2');
             Route::get('penjualan/{id}', 'show')->name('laporan-penjualan.show');
             // cari
             // Route::get('barang-in-out/search', 'search')->name('cari-barang-in-out');

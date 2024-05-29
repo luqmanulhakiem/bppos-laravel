@@ -23,7 +23,8 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <div class="row">
+        <h4>Selamat datang kembali</h4>
+        {{-- <div class="row">
           <div class="col-lg-6">
             <div class="card">
               <div class="card-header border-0">
@@ -264,7 +265,7 @@
             </div>
           </div>
           <!-- /.col-md-6 -->
-        </div>
+        </div> --}}
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
