@@ -175,6 +175,7 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
          Route::controller(PenjualanLaporanController::class)->group(function (){
             // index
             Route::get('penjualan', 'index')->name('laporan-penjualan');
+            Route::get('penjualan/{tglawal}/{tglakhir}', 'indexDate')->name('laporan-penjualan.range');
             Route::get('penjualan/{id}', 'show')->name('laporan-penjualan.show');
             // cari
             // Route::get('barang-in-out/search', 'search')->name('cari-barang-in-out');

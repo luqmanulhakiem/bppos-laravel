@@ -18,6 +18,12 @@ class PenjualanLaporanController extends Controller
         return view('dashboard.halaman.penjualanLaporan.index', compact('data'));
     }
 
+    public function indexDate(string $tglawal, string $tglakhir)
+    {
+        $data = Penjualan::with('pelanggan')->where('status', 'selesai')->whereBetween('tgl_penjualan', [$tglawal, $tglakhir])->latest()->paginate(30); 
+        return view('dashboard.halaman.penjualanLaporan.index', compact('data'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

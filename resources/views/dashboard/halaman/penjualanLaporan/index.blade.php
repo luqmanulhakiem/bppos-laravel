@@ -26,15 +26,39 @@
             <div class="col-md-12">
                 <div class="card">
                 <div class="card-header">
-                    <div class="row justify-content-between">
+                    {{-- <div class="row justify-content-between">
                         <h3 class="card-title">Riwayat Laporan Penjualan</h3>
-                    </div>
-                    <div class="search-bar">
+                    </div> --}}
+                    {{-- <div class="search-bar">
                       <form class="search-form d-flex align-items-center" method="get" action="{{route('cari-barang-in-out')}}">
                         <input type="text" class="form-control col-md-2" name="param" placeholder="Cari..." title="Kata Kunci: Masukkan Kata Kunci">
                         <button type="submit" title="Search" class="btn btn-primary btn-sm"> <i class="fa fa-search"></i> </button>
                       </form>
+                    </div> --}}
+                    <div class="row">
+                      <div class="form-group mr-2">
+                          <label for="label">Tanggal Awal</label>
+                          <input type="date" name="tglawal" id="tglawal" class="form-control" />
+                      </div>
+                      <div class="form-group mr-2">
+                          <label for="label">Tanggal Akhir</label>
+                          <input type="date" name="tglakhir" id="tglakhir" class="form-control" />
+                      </div>
+                      <div class="form-group">
+                          <label for="">Lihat</label>
+                          <a href="" onclick="this.href='/laporan/penjualan/'+ document.getElementById('tglawal').value +
+                              '/' + document.getElementById('tglakhir').value " class="btn btn-primary col-md-12">
+                              Lihat
+                          </a>
+                      </div>
                     </div>
+                    <div class="row">
+                          <a href="" onclick="this.href='/laporan-tgl/'+ document.getElementById('tglawal').value +
+                                '/' + document.getElementById('tglakhir').value " class="btn bg-pink ">
+                                Download Laporan PDF
+                            </a>
+                    </div>
+  
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
