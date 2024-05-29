@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
+use App\Models\PenjualanItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PenjualanLaporanController extends Controller
 {
@@ -37,7 +39,14 @@ class PenjualanLaporanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Penjualan::with(['pelanggan'])->where('id', $id)->first();
+        $item = DB::table('penjualan_items as k')
+        ->join('barangs as b', 'b.id', '=', 'k.id_barang')
+        ->select('k.id as keranjang_id', 'k.*', 'b.*', 'b.id as barang_id')
+        ->where('k.id_penjualan', '=', $data->id)
+        ->get();
+        // return response()->json($item);
+        return view('dashboard.halaman.penjualanLaporan.show', compact('data', 'item'));
     }
 
     /**

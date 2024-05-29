@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Laporan Penjualan</h1>
+            <h1>Detail Penjualan</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Laporan Penjualan</li>
+              <li class="breadcrumb-item active">Detail Penjualan</li>
             </ol>
           </div>
         </div>
@@ -26,15 +26,36 @@
             <div class="col-md-12">
                 <div class="card">
                 <div class="card-header">
-                    <div class="row justify-content-between">
-                        <h3 class="card-title">Riwayat Laporan Penjualan</h3>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <table class="table">
+                        <tr>
+                          <th>No Nota:</th>
+                          <td>{{$data->no_nota}}</td>
+                        </tr>
+                        <tr>
+                          <th>Nama Pelanggan:</th>
+                          <td>{{$data->pelanggan->nama}}</td>
+                        </tr>
+                        <tr>
+                          <th>Grand Total:</th>
+                          <td>{{$data->grand_total}}</td>
+                        </tr>
+                      </table>
                     </div>
-                    <div class="search-bar">
-                      <form class="search-form d-flex align-items-center" method="get" action="{{route('cari-barang-in-out')}}">
-                        <input type="text" class="form-control col-md-2" name="param" placeholder="Cari..." title="Kata Kunci: Masukkan Kata Kunci">
-                        <button type="submit" title="Search" class="btn btn-primary btn-sm"> <i class="fa fa-search"></i> </button>
-                      </form>
+                    <div class="col-md-6">
+                      <table class="table">
+                        <tr>
+                          <th>Tanggal Penjualan:</th>
+                          <td>{{$data->tgl_penjualan}}</td>
+                        </tr>
+                        <tr>
+                          <th>Tanggal Pengambilan:</th>
+                          <td>{{$data->tgl_pengambilan}}</td>
+                        </tr>
+                      </table>
                     </div>
+                  </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -42,36 +63,33 @@
                     <thead>
                         <tr>
                         <th style="width: 10px">#</th>
-                        <th>Invoice No.</th>
-                        <th>Tanggal</th>
-                        <th>Customer</th>
-                        <th>Total</th>
-                        <th>Diskon</th>
-                        <th>Grand Total</th>
-                        <th class="text-center">Pilihan</th>
+                        <th>Kode Barang</th>
+                        <th>Nama Barang</th>
+                        <th>Ukuran</th>
+                        <th>Harga</th>
+                        <th>Kuantitas</th>
                         </tr>
                     </thead>
                     <tbody>
                       {{-- Inisialisasi Nomer Urut --}}
                       <?php $number = 1 ?>
                       {{-- check data memiliki item lebih besar dari 1 --}}
-                      @if (count($data) >= 1)
+                      @if (count($item) >= 1)
                         {{-- Looping Data --}}
-                        @foreach ($data as $item)
+                        @foreach ($item as $item)
                           <tr>
                               <td>{{$number++}}</td>
-                              <td>{{$item->no_nota}}</td>
-                              <td>{{$item->tgl_penjualan}}</td>
-                              <td>{{$item->pelanggan->nama}}</td>
-                              <td>Rp. {{Illuminate\Support\Number::format($item->sub_total)}}</td>
-                              <td>{{$item->diskon}}%</td>
-                              <td>Rp. {{Illuminate\Support\Number::format($item->grand_total)}}</td>
-                              <td class="text-center">
-                                  <div class="btn-group">
-                                    <a href="{{route('laporan-penjualan.show', ['id' => $item->id])}}" class="btn btn-sm btn-light"><i class="fa fa-eye"></i> Lihat</a>
-                                    <a href="" class="btn btn-sm bg-green"><i class="fa fa-print"></i> Cetak</a>
-                                  </div>
+                              <td>{{$item->kode}}</td>
+                              <td>{{$item->nama}}</td>
+                              <td>
+                                @if ($item->ukuran == null)
+                                {{$item->ukuran_p}} x {{$item->ukuran_l}}
+                                @else
+                                {{$item->ukuran}}
+                                @endif
                               </td>
+                              <td>Rp. {{Illuminate\Support\Number::format($item->harga)}}</td>
+                              <td>{{$item->kuantitas}}</td>
                           </tr>
                         @endforeach
                       @else
@@ -85,7 +103,7 @@
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
                   {{-- Navigasi Paginasi --}}
-                  {{$data->links()}}
+                  {{-- {{$data->links()}} --}}
                 </div>
                 </div>
                 <!-- /.card -->
