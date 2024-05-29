@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KeranjangRequest;
+use App\Http\Requests\PenjualanItemAddRequest;
 use App\Http\Requests\PenjualanRequest;
 use App\Models\Barang;
 use App\Models\Keranjang;
@@ -26,6 +27,101 @@ class PenjualanController extends Controller
 
         return view('dashboard.halaman.penjualan.index', compact(['currentDate', 'invoice', 'barang', 'penjualan', 'penjualanCount']));
     }
+
+    public function edit(string $id)
+    {
+        // $currentDate = Carbon::now()->toDateString();
+        // $invoice = Carbon::now()->format('ymdhs');
+        $barang = Barang::with(['kategori', 'satuan', 'harga'])->paginate('10');
+        // $penjualan = Penjualan::with(['items', 'pelanggan'])->where('status', 'belum')->latest()->paginate(5);        
+        // $penjualanCount = Penjualan::with('items')->where('status', 'belum')->count();
+        $penjualan = Penjualan::with(['items', 'pelanggan'])->where('id', $id)
+        ->first();  //where pelanggan with relation barang
+        $keranjang = DB::table('penjualan_items as k')
+        ->join('barangs as b', 'b.id', '=', 'k.id_barang')
+        ->select('k.id as keranjang_id', 'k.*', 'b.*', 'b.id as barang_id')
+        ->where('k.id_penjualan', '=', $penjualan->id)
+        ->get();
+
+        // $penjualanIT = PenjualanItem::where('id_penjualan', $penjualan->id)->get();        
+
+        // return response()->json($penjualan);
+
+        return view('dashboard.halaman.penjualan.edit', compact(['barang', 'penjualan', 'keranjang']));
+    }
+
+    public function tambahItemAntrian(PenjualanItemAddRequest $request)
+    {
+        $data = $request->validated();
+
+        if ($data['jenis'] == 1) {
+            $data['total'] =  ($data['harga'] - 0) * $data['kuantitas'];
+
+            PenjualanItem::create([
+                'id_penjualan' => $data['id_penjualan'],
+                'id_barang' => $data['id_barang'],
+                'harga' => $data['harga'],
+                'ukuran' => 'Pcs/Unit',
+                'diskon' => 0,
+                'kuantitas' => $data['kuantitas'],
+                'total' => $data['total'],
+            ]);
+        } else {
+            $data['total'] = (($data['ukuran_p'] * $data['ukuran_l']) * (($data['harga'] - 0) / (100 * 100))) * $data['kuantitas'];
+            PenjualanItem::create([
+                'id_penjualan' => $data['id_penjualan'],
+                'id_barang' => $data['id_barang'],
+                'ukuran_p' => $data['ukuran_p'],
+                'ukuran_l' => $data['ukuran_l'],
+                'harga' => $data['harga'],
+                'diskon' => 0,
+                'kuantitas' => $data['kuantitas'],
+                'total' => $data['total'],
+            ]);
+        }
+
+        $keranjang = DB::table('penjualan_items as k')
+        ->join('barangs as b', 'b.id', '=', 'k.id_barang')
+        ->select('k.id as keranjang_id', 'k.*', 'b.*', 'b.id as barang_id')
+        ->where('k.id_penjualan', '=', $data['id_penjualan'])
+        ->get();
+        $bayar = Penjualan::where('id', $data['id_penjualan'])->first(); 
+
+        $totalK = $keranjang->sum('total');
+        $bayar->update([
+            'sub_total' => $totalK,
+            'grand_total' => $totalK,
+        ]);
+        $total = $totalK;
+        $sisa = (int) $totalK - (int) $bayar->bayar;
+
+        return response()->json(['data' => $keranjang, 'sub_total' => $total, 'sisa' => $sisa, 'msg' => 'success'], 200);
+    }
+
+    public function hapusItemAntrian(Request $request)
+    {
+        $id = $request->id;
+        $idPenjualan = $request->id_penjualan;
+
+        PenjualanItem::findorfail($id)->delete();
+
+        $keranjang = DB::table('penjualan_items as k')
+        ->join('barangs as b', 'b.id', '=', 'k.id_barang')
+        ->select('k.id as keranjang_id', 'k.*', 'b.*', 'b.id as barang_id')
+        ->where('k.id_penjualan', '=', $idPenjualan)
+        ->get();
+
+        $total = $keranjang->sum('total');
+        $bayar = Penjualan::where('id', $idPenjualan)->first();
+        $bayar->update([
+            'sub_total' => $total,
+            'grand_total' => $total,
+        ]); 
+        $sisa = (int) $total - (int) $bayar->bayar;
+
+        return response()->json(['data' => $keranjang, 'sub_total' => $total, 'sisa' => $sisa, 'msg' => 'success'], 200);
+    }
+
     public function cariPelanggan(Request $request)
     {
         if ($request->has('q')) {

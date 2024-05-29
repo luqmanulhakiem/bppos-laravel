@@ -109,6 +109,12 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
          Route::controller(PenjualanController::class)->group(function (){
             // index
             Route::get('penjualan', 'index')->name('penjualan');
+            // edit 
+            Route::get('penjualan/edit/{id}', 'edit')->name('penjualan.edit');
+            // edit tambah barang
+            Route::post('penjualan/edit/tambah-barang', 'tambahItemAntrian')->name('penjualan.edit.add');
+            // edit hapus barang
+            Route::post('penjualan/edit/hapus', 'hapusItemAntrian')->name('penjualan.edit.delete');
             // check keranjang
             Route::post('penjualan/cart-check', 'checkKeranjang')->name('penjualan.cart-check');
             // tambah keranjang
@@ -118,6 +124,8 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             // simpan penjualan
             Route::post('penjualan/store', 'simpanKeranjang')->name('penjualan.store');
             // simpan ke laporan penjualan
+            Route::post('penjualan/store/{id}', 'saveToLaporan')->name('penjualan.store-selesai.p');
+
             Route::get('penjualan/store/{id}', 'saveToLaporan')->name('penjualan.store-selesai');
             // request
             Route::get('penjualan/cari-pelanggan', 'cariPelanggan')->name('penjualan.cari-pelanggan');

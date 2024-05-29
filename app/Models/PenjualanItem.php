@@ -23,7 +23,7 @@ class PenjualanItem extends Model
 
     public function penjualan(): BelongsTo
     {
-        return $this->belongsTo(Penjualan::class);
+        return $this->belongsTo(Penjualan::class, 'id', 'id_penjualan');
     }
 
 }

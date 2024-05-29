@@ -70,5 +70,6 @@
 
 @stack("barang-script")
 @stack("penjualan-script")
+@stack("penjualan-edit-script")
 </body>
 </html>

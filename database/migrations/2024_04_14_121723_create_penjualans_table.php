@@ -26,6 +26,7 @@ return new class extends Migration
             $table->enum('status_bayar', ['belum', 'lunas']);
             $table->enum('status', ['belum', 'selesai'])->default('belum');
             $table->string('catatan')->nullable();
+            $table->string('snap_token')->nullable();
             $table->timestamps();
         });
     }

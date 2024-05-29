@@ -22,7 +22,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-          <form action="{{route('penjualan.store')}}" method="POST">
+          <form action="{{route('penjualan.store-selesai.p', ['id' => $penjualan->id])}}" method="POST">
             @csrf
             <div class="row">
               @if ($errors->any())
@@ -41,7 +41,7 @@
                             <label for="">Tanggal</label>
                           </div>
                           <div class="col-8">
-                            <input type="date" name="tgl_penjualan" value="{{$currentDate}}" id="tglPenjualan" class="form-control" required>
+                            <input type="date" name="tgl_penjualan" value="{{$penjualan->tgl_penjualan}}" id="tglPenjualan" class="form-control" readonly>
                           </div>
                         </div>
                         <div class="row form-group">
@@ -58,26 +58,19 @@
                             <label for="">Pelanggan</label>
                           </div>
                           <div class="col-8">
-                            
-          
                             <div class="input-group">
-                                <input type="hidden" name="id_pelanggan" id="id_pelanggan">
-                                <input type="hidden" name="level_pelanggan">
-                                <select class="form-control" id="cari-pelanggan" style="width: calc(100% - 38px);"></select>
-                                <div class="input-group-prepend" style="width: 38px;">
-                                  <button class="btn btn-dark" type="button" style="width: 100%;"><i class="fa fa-qrcode"></i></button>
-                                </div>
+                                <input type="text" value="{{$penjualan->pelanggan->nama}}" class="form-control" readonly>
                             </div>
                           </div>
                         </div>
                     </div>
-                    <div class="row card-footer">
+                    {{-- <div class="row card-footer">
                       <div class="col-4"></div>
                       <div class="col-8">
                         <button type="button" id="btnTerapkan" class="btn btn-sm btn-primary" disabled>Terapkan</button>
                         <button id="btnReset" type="button" class="btn btn-sm btn-secondary" disabled><i class="fa fa-arrow-left"></i> Reset</button>
                       </div>
-                    </div>
+                    </div> --}}
                 </div>
               </div>
               {{-- Input Barang --}}
@@ -91,15 +84,16 @@
                           <div class="col-8">
                             <div class="input-group">
                               {{-- Validasi --}}
+                              <input type="hidden" id="inptIdPenjualan" value="{{$penjualan->id}}">
                               <input type="hidden" id="stok">
                               <input type="hidden" id="stokP">
                               <input type="hidden" id="stokL">
                               {{-- Important --}}
-                              <input type="hidden" id="inptIdPelanggan">
+                              <input type="hidden" id="idPelanggan" value="{{$penjualan->pelanggan->id}}">
                               <input type="hidden" name="id_barang" id="inptIdBarang">
                               <input type="hidden" name="harga" id="inptHarga">
                               <input type="text" id="kodeBarang" class="form-control" value="-" readonly>
-                              <button id="btnCariBarang" data-toggle="modal" data-target="#modalPilihBarang" class="btn btn-secondary" type="button" disabled><i class="fa fa-search"></i></button>
+                              <button id="btnCariBarang" data-toggle="modal" data-target="#modalPilihBarang" class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
                             </div>
                           </div>
                         </div>
@@ -142,13 +136,13 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="row">
-                      <input type="hidden" name="no_nota" value="{{$invoice}}">
+                      <input type="hidden" name="no_nota" value="{{$penjualan->no_nota}}">
                       <p class="card-title">
-                        Invoice {{$invoice}}
+                        Invoice {{$penjualan->no_nota}}
                       </p>
                     </div>
                     <div class="row">
-                      <h1 id="grand_total2" class="text-red">0</h1>
+                      <h1 id="grand_total2" class="text-red">{{$penjualan->grand_total}}</h1>
                     </div>
                   </div>
                 </div>
@@ -169,13 +163,43 @@
                         <th>Kuantitas</th>
                         <th>Diskon</th>
                         <th>Total</th>
-                        <th>Action</th>
+                        <th class="text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td colspan="9" class="text-center">Tidak ada item</td>
-                      </tr>
+                      @if (count($keranjang) > 0)
+                      <?php $num = 1 ?>
+                        @foreach ($keranjang as $item)
+                            <tr>
+                              <td>{{$num++}}</td>
+                              <td>{{$item->kode}}</td>
+                              <td>{{$item->nama}}</td>
+                              <td>
+                                @if ($item->ukuran != null)
+                                  {{$item->ukuran}}
+                                @else
+                                  {{$item->ukuran_p}}  x {{$item->ukuran_l}} 
+
+                                @endif
+
+                              </td>
+                              {{-- <td>{{$item->ukuran != null ? $item->ukuran : "$item->ukuran_p" . "x" . $item->ukuran_l}}</td> --}}
+                              <td>{{$item->harga}}</td>
+                              <td>{{$item->kuantitas}}</td>
+                              <td>{{$item->diskon}}</td>
+                              <td>{{$item->total}}</td>
+                              <td class="text-center">
+                                <div class="btn-group">
+                                  <a class="btn btn-sm btn-danger" id="btnHapus" data-id="{{$item->id}}" ><i class="fa fa-trash"></i> Hapus</a>
+                                </div>
+                              </td>
+                            </tr>
+                        @endforeach
+                      @else
+                        <tr>
+                          <td colspan="9" class="text-center">Tidak ada item</td>
+                        </tr>
+                      @endif
                     </tbody>
                   </table>
                 </div>
@@ -192,15 +216,15 @@
                             <label for="">Sub Total</label>
                           </div>
                           <div class="col-8">
-                            <input type="text" name="sub_total" id="sub_total" class="form-control" readonly>
+                            <input type="text" name="sub_total" value="{{$penjualan->sub_total}}" id="sub_total" class="form-control" readonly>
                           </div>
                         </div>
                         <div class="row form-group">
                           <div class="col-4">
-                            <label for="">Diskon</label>
+                            <label for="">DP</label>
                           </div>
                           <div class="col-8">
-                            <input type="number" id="diskon" class="form-control" name="diskon_sub" value="0" required>
+                            <input type="number" id="dp" class="form-control" name="bayar" value="{{$penjualan->bayar}}" readonly>
                           </div>
                         </div>
                         <div class="row form-group">
@@ -208,7 +232,7 @@
                             <label for="">Grand Total</label>
                           </div>
                           <div class="col-8">
-                            <input type="text" id="grand_total" name="grand_total" class="form-control bg-orange text-white" readonly>
+                            <input type="text" id="grand_total" value="{{$penjualan->grand_total}}" name="grand_total" class="form-control bg-orange text-white" readonly>
                           </div>
                         </div>
                     </div>
@@ -223,9 +247,10 @@
                             <label for="">Pengambilan</label>
                           </div>
                           <div class="col-8">
-                            <input type="date" name="tgl_pengambilan" id="" class="form-control" required>
+                            <input type="date" name="tgl_pengambilan" value="{{$penjualan->tgl_pengambilan}}" id="" class="form-control" readonly>
                           </div>
                         </div>
+                        
                         <div class="row form-group">
                           <div class="col-4">
                             <label for="">Bayar</label>
@@ -239,14 +264,14 @@
                             <label for="">Sisa</label>
                           </div>
                           <div class="col-8">
-                            <input type="text" name="sisa" id="sisa" class="form-control" value="0" readonly>
+                            <input type="text" name="sisa" value="{{(int) $penjualan->grand_total - (int) $penjualan->bayar}}" id="sisa" class="form-control" readonly>
                           </div>
                         </div>
                     </div>
                 </div>
               </div>
               {{-- Catatan --}}
-              <div class="col-md-3">
+              {{-- <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="row form-group">
@@ -255,14 +280,14 @@
                         </div>
                     </div>
                 </div>
-              </div>
+              </div> --}}
               {{-- Submit --}}
               <div class="col-md-3">
                   <div class="row mt-4 mb-3">
-                    <button type="button" class="btn btn-secondary">Batal</button>
+                    <button type="button" class="btn btn-secondary">Pembayaran Digital</button>
                   </div>
                   <div class="row">
-                    <button type="submit" class="btn btn-primary">Proses Pembayaran</button>
+                    <button type="submit" class="btn btn-primary">Pembayaran Cash</button>
                   </div>
               </div>
             </div>
@@ -335,9 +360,9 @@
               </tr>
             </thead>
             <tbody>
-              @if (count($penjualan) > 0)
-              @foreach ($penjualan as $item)
-                <tr>
+              {{-- @if (count($penjualan) > 0) --}}
+              {{-- @foreach ($penjualan as $item) --}}
+                {{-- <tr>
                   <td>{{$item->no_nota}}</td>
                   <td>{{$item->pelanggan->nama}}</td>
                   <td>{{$item->tgl_penjualan}}</td>
@@ -348,7 +373,6 @@
                   </td>
                   <td>
                     <div class="btn btn-group">
-                      <a href="{{route('penjualan.edit', ['id' => $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-pen "></i> Edit</a>
                       <button class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Cetak</button>
                       @if ($item->sisa < 0)
                         <a href="{{route('penjualan.store-selesai', ['id' => $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-exclamation-triangle "></i> Selesai</a>
@@ -359,55 +383,30 @@
                   </td>
                 </tr>
               @endforeach
-              @else
+              @else --}}
                 <tr>
                   <td colspan="6" class="text-center">Belum ada data</td>
                 </tr>
-              @endif
+              {{-- @endif --}}
             </tbody>
           </table>
         </div>
         <div class="modal-footer">
-            {{$penjualan->links()}}
+            {{-- {{$penjualan->links()}} --}}
         </div>
       </div>
     </div>
   </div>
-  @push('penjualan-script')
+  @push('penjualan-edit-script')
   <script>
-    $(document).ready(function() {
-
-      $('#cari-pelanggan').select2({
-        placeholder: 'Nama Pelanggan',
-        ajax: {
-          url: '{{ route('penjualan.cari-pelanggan') }}',
-          dataType: 'json',
-          delay: 250,
-          processResults: function (data) {
-            return {
-              results: $.map(data, function (item) {
-                return {
-                  level: item.level,
-                  text: item.nama,
-                  id: item.id
-                }
-              })
-            };
-          },
-          cache: true
-        }
-      });
-      $('#cari-pelanggan').on('select2:select', function (e) {
-        var selectedData = e.params.data;
-        $('#id_pelanggan').val(selectedData.id);
-        $('#level_pelanggan').val(selectedData.level);
-        $('#btnTerapkan').prop('disabled', false);
-        $.ajax({
+     $(document).ready(function() {
+      var idPelanggan = $('#idPelanggan').val();
+      $.ajax({
             url: "{{route('penjualan.list-barang')}}", // Ganti dengan URL endpoint Anda
             type: 'GET', // Ubah metode HTTP sesuai dengan metode yang digunakan pada server Anda
             dataType: 'json',
             data: {
-                id_pelanggan: selectedData.id // Ganti dengan id pelanggan yang sesuai
+                id_pelanggan: idPelanggan // Ganti dengan id pelanggan yang sesuai
             },
             success: function(response){
               var pelanggan = response.pelanggan;
@@ -450,26 +449,15 @@
                 // Tambahkan penanganan kesalahan di sini jika diperlukan
             }
         });
+        $('#bayar').on('change keyup', function() {
+          var grandTotal = parseFloat($('#grand_total').val());
+          var dp = parseFloat($('#dp').val());
+          var bayar = parseFloat($(this).val());
+          var sisa = (bayar - grandTotal) + dp;
+          $('#sisa').val(sisa);
+        });
       });
-      
-    });
-    $('#btnTerapkan').on('click', function () {
-      var idPelanggan = $('#id_pelanggan').val();
-      var inptData = {
-            id_pelanggan: idPelanggan
-          };
-
-      getKeranjang(inptData);
-
-      $('#cari-pelanggan').prop('disabled', true);
-      $('#btnReset').prop('disabled', false);
-      $('#btnCariBarang').prop('disabled', false).removeClass('btn-secondary').addClass('btn-primary');
-      $(this).prop('disabled', true);
-    })
-    $('#btnReset').on('click', function () {
-      location.reload();
-    })
-    $('#modalPilihBarang').on('keyup click', '#searchInput, #btnPilih', function(event) {
+     $('#modalPilihBarang').on('keyup click', '#searchInput, #btnPilih', function(event) {
       if (event.target.id === 'searchInput') {
           var searchText = $(this).val().toLowerCase();
           var idPelanggan = $('#id_pelanggan').val();
@@ -547,23 +535,23 @@
       };
     });
     $('#jenisBarang').on('change', function() {
-      var satuanValue = $(this).val();
-      if (satuanValue === '1') {
-          $('#ukuran').val('Pcs/Unit');
-          $('#ukuran').prop('hidden', false).show();
-          $('#inputQtyBarang').prop('disabled', false);
-          $('#inputQtyBarang').val('1');
-          $('#ukuran_p, #ukuran_l').hide().prop('hidden', true);
-      } else if (satuanValue === '2') {
-          $('#ukuran').prop('hidden', true).hide();
-          $('#ukuran_p, #ukuran_l').show().prop('hidden', false);
-          $('#inputQtyBarang').prop('disabled', false);
-          $('#inputQtyBarang').val('1');
-      }
-  });
-  // add keranjang
+        var satuanValue = $(this).val();
+        if (satuanValue === '1') {
+            $('#ukuran').val('Pcs/Unit');
+            $('#ukuran').prop('hidden', false).show();
+            $('#inputQtyBarang').prop('disabled', false);
+            $('#inputQtyBarang').val('1');
+            $('#ukuran_p, #ukuran_l').hide().prop('hidden', true);
+        } else if (satuanValue === '2') {
+            $('#ukuran').prop('hidden', true).hide();
+            $('#ukuran_p, #ukuran_l').show().prop('hidden', false);
+            $('#inputQtyBarang').prop('disabled', false);
+            $('#inputQtyBarang').val('1');
+        }
+    });
+    // add keranjang
   $('#btnKeranjang').on('click', function() {
-    var inptIdPelanggan = $('#inptIdPelanggan').val();
+    var inptIdPenjualan = $('#inptIdPenjualan').val();
     var inptIdBarang = $('#inptIdBarang').val();
     var inptHarga = $('#inptHarga').val();
     var inptKuantitas =  $('#inputQtyBarang').val();
@@ -580,7 +568,7 @@
         if (parseFloat(inptKuantitas) <= parseFloat(stok)) {
           inptData = {
               jenis: inptJenis,
-              id_pelanggan: inptIdPelanggan,
+              id_penjualan: inptIdPenjualan,
               id_barang: inptIdBarang,
               harga: inptHarga,
               kuantitas: inptKuantitas,
@@ -610,7 +598,7 @@
           if (parseFloat(inptUkuranP) <= stokP && parseFloat(inptUkuranL) <= stokL){
             inptData = {
                 jenis: inptJenis,
-                id_pelanggan: inptIdPelanggan,
+                id_penjualan: inptIdPenjualan,
                 id_barang: inptIdBarang,
                 ukuran_p: inptUkuranP,
                 ukuran_l: inptUkuranL,
@@ -627,7 +615,7 @@
     }
     if (check == 1) {
       $.ajax({
-          url: "{{route('penjualan.cart')}}", // Ganti dengan URL endpoint Anda
+          url: "{{route('penjualan.edit.add')}}", // Ganti dengan URL endpoint Anda
           type: 'POST', // Ubah metode HTTP sesuai dengan metode yang digunakan pada server Anda
           dataType: 'json',
           headers: {
@@ -644,6 +632,8 @@
               var bayar = $('#bayar').val();
               $('#sisa').val(bayar - grandTotal);
               $('#grand_total2').text(grandTotal);
+              // var sisa = response.sub_total - response.sisa;
+              $('#sisa').val(response.sisa);
   
               // Bersihkan isi tabel sebelum menambahkan data baru
               table.find("tr:gt(0)").remove();
@@ -680,91 +670,26 @@
       $('#btnKeranjang').prop('disabled', true);
       $('#ukuran').prop('hidden', false).show();
     }
+    
   });
-  $('#diskon').on('change keyup', function() {
-    var diskon = parseFloat($(this).val());
-    if (diskon > 100 || diskon < 0) {
-      alert('diskon hanya boleh dari 0-100')
-    }else{
-      var subTotal = parseFloat($('#sub_total').val());
-      var grandTotal = subTotal - (subTotal * diskon / 100);
-      $('#grand_total').val(grandTotal);
-      $('#grand_total2').text(grandTotal);
-    }
-  });
-  $('#bayar').on('change keyup', function() {
-    var grandTotal = parseFloat($('#grand_total').val());
-    var bayar = parseFloat($(this).val());
-    var sisa = bayar - grandTotal;
-    $('#sisa').val(sisa);
-  });
+  //hapus item
   $(document).on('click', '#btnHapus', function() {
+    console.log('aaa');
     var id = $(this).data("id");
-    var idPelanggan = $('#id_pelanggan').val();
+    var idPelanggan = $('#inptIdPenjualan').val();
 
     var data = {
       id: id,
-      id_pelanggan: idPelanggan
+      id_penjualan: idPelanggan
     };
 
     hapusKeranjang(data);
 
     console.log("Hapus Item" + id + "IdPelanggan" + idPelanggan);
   });
-  function getKeranjang(inptData) {
-    $.ajax({
-        url: "{{route('penjualan.cart-check')}}", // Ganti dengan URL endpoint Anda
-        type: 'POST', // Ubah metode HTTP sesuai dengan metode yang digunakan pada server Anda
-        dataType: 'json',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        data: inptData,
-        success: function(response){
-          console.log(response);
-            var keranjang = response.data; // Ambil data barang dari pagination
-            var table = $('#cart-table'); // Ganti dengan ID tabel Anda
-            console.log(response);
-            // Bersihkan isi tabel sebelum menambahkan data baru
-            if (keranjang.length === 0) {
-              console.log("Keranjang Kosong")
-            }else {
-              table.find("tr:gt(0)").remove();
-              $('#sub_total').val(response.sub_total);
-              $('#diskon').val(0);
-              var grandTotal = response.sub_total - (response.sub_total * 0 / 100);
-              $('#grand_total').val(grandTotal);
-              var bayar = $('#bayar').val();
-              $('#sisa').val(bayar - grandTotal);
-              $('#grand_total2').text(grandTotal);
-  
-              // Loop melalui setiap data barang dan tambahkan ke tabel
-                var number = 1;
-              $.each(keranjang, function(key, value){
-                  var row = '<tr>' +
-                              '<td>' + number++ + '</td>' +
-                              '<td>' + value.kode + '</td>' +
-                              '<td>' + value.nama + '</td>' +
-                              '<td>' + (value.jenis == 1 ? value.ukuran : (value.ukuran_p + 'x' + value.ukuran_l)) + '</td>' +
-                              '<td>' + value.harga + '</td>' +
-                              '<td>' + value.kuantitas + '</td>' +
-                              '<td>' + value.diskon + '</td>' +
-                              '<td>' + value.total + '</td>' +
-                              '<td>' + "<button type='button' id='btnHapus' data-id='" + value.keranjang_id + "' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i> Hapus</button>" + '</td>' + // Ganti dengan atribut yang sesuai
-                            '</tr>';
-                  table.append(row);
-              });
-            }
-        },
-        error: function(xhr, status, error){
-            console.error(error);
-            // Tambahkan penanganan kesalahan di sini jika diperlukan
-        }
-    });
-  }
   function hapusKeranjang(inptData) {
     $.ajax({
-        url: "{{route('penjualan.cart-hapus')}}",
+        url: "{{route('penjualan.edit.delete')}}",
         type: 'POST',
         dataType: 'json',
         headers: {
@@ -775,7 +700,7 @@
             var keranjang = response.data; 
             var table = $('#cart-table');
             table.find("tr:gt(0)").remove();
-
+        
             if (keranjang.length === 0) {
               var row = '<tr>' +
                           '<td colspan="9" class="text-center">Tidak Ada Item</td>' +
@@ -785,6 +710,7 @@
               $('#diskon').val(0);
               var grandTotal = response.sub_total - (response.sub_total * 0 / 100);
               $('#grand_total').val(grandTotal);
+              
               $('#grand_total2').text(grandTotal);
             }else {
               $('#sub_total').val(response.sub_total);

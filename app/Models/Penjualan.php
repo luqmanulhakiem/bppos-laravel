@@ -23,12 +23,13 @@ class Penjualan extends Model
         'sisa',  
         'status_bayar',  
         'status',  
-        'catatan',  
+        'catatan', 
+        'snap_token', 
     ];
 
     public function items(): HasMany
     {
-        return $this->hasMany(PenjualanItem::class,'id', 'id_penjualan', 'id');
+        return $this->hasMany(PenjualanItem::class, 'id_penjualan', 'id');
     }
     public function pelanggan(): HasOne
     {
