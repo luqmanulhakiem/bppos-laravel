@@ -22,6 +22,7 @@ class PenjualanRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'metode' => 'nullable',
             'no_nota' => 'required',
             'id_pelanggan' => 'required',
             'id_kasir' => 'nullable',

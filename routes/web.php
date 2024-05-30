@@ -109,6 +109,8 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
          Route::controller(PenjualanController::class)->group(function (){
             // index
             Route::get('penjualan', 'index')->name('penjualan');
+            Route::get('penjualan/bayar/{id}', 'penjualanBayar')->name('penjualan.bayar');
+            Route::get('penjualan/bayar-sukses/{id}', 'penjualanSukses')->name('penjualan.sukses');
             // edit 
             Route::get('penjualan/edit/{id}', 'edit')->name('penjualan.edit');
             // edit tambah barang
@@ -125,6 +127,8 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::post('penjualan/store', 'simpanKeranjang')->name('penjualan.store');
             // simpan ke laporan penjualan
             Route::post('penjualan/store/{id}', 'saveToLaporan')->name('penjualan.store-selesai.p');
+            Route::post('penjualan/edit/bayar/{id}', 'bayarOnline')->name('penjualan.store-selesai.online');
+
 
             Route::get('penjualan/store/{id}', 'saveToLaporan')->name('penjualan.store-selesai');
             // request

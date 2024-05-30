@@ -22,7 +22,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-          <form action="{{route('penjualan.store-selesai.p', ['id' => $penjualan->id])}}" method="POST">
+          <form id="paymentForm" action="{{route('penjualan.store-selesai.online', ['id' => $penjualan->id])}}" method="POST">
             @csrf
             <div class="row">
               @if ($errors->any())
@@ -283,12 +283,12 @@
               </div> --}}
               {{-- Submit --}}
               <div class="col-md-3">
-                  <div class="row mt-4 mb-3">
-                    <button type="button" class="btn btn-secondary">Pembayaran Digital</button>
-                  </div>
-                  <div class="row">
-                    <button type="submit" class="btn btn-primary">Pembayaran Cash</button>
-                  </div>
+                <div class="row mt-4 mb-3">
+                  <button type="button" onclick="onlineSubmit('online')" class="btn btn-secondary">Bayar Online</button>
+                </div>
+                <div class="row">
+                  <button type="button" onclick="onlineSubmit('cash')" class="btn btn-primary">Proses Pembayaran</button>
+                </div>
               </div>
             </div>
             <!-- /.row -->
@@ -743,6 +743,20 @@
         }
     });
   }
+  function onlineSubmit(status) {
+      // Create a hidden input field
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'metode';
+      input.value = status;
+
+      // Append the hidden input field to the form
+      var form = document.getElementById('paymentForm');
+      form.appendChild(input);
+
+      // Submit the form
+      form.submit();
+    }
   </script>
   @endpush
 @endsection

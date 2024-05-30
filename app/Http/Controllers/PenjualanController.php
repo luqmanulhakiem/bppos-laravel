@@ -300,13 +300,118 @@ class PenjualanController extends Controller
             toastr()->error('Gagal');
             return redirect()->back()->withInput();
         }
-        toastr()->success('Berhasil');
 
-        return redirect()->route('penjualan');
+        if ($data['metode'] == 'online') {
+                
+            // Set your Merchant Server Key
+            \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+            \Midtrans\Config::$isProduction = false;
+            // Set sanitization on (default)
+            \Midtrans\Config::$isSanitized = true;
+            // Set 3DS transaction for credit card to true
+            \Midtrans\Config::$is3ds = true;
+
+            // SNAP
+            $params = array(
+                'transaction_details' => array(
+                    'order_id' => rand(),
+                    'gross_amount' => $data['bayar'],
+                )
+            );
+            
+            try {
+                $snapToken = \Midtrans\Snap::getSnapToken($params);
+                $penjualan->update([
+                    'snap_token' => $snapToken
+                ]);
+            } catch (\Exception $e) {
+                // Log the error or handle it as needed
+                error_log($e->getMessage());
+                // You can also return an error response if needed
+                return response()->json(['error' => 'Failed to get snap token. Please check your server key and environment settings.']);
+            }
+            return redirect()->route('penjualan.bayar', $penjualan->id);
+        }else{
+            toastr()->success('Berhasil');
+            return redirect()->route('penjualan');
+        }
+    }
+
+    public function penjualanBayar(string $id){
+        $data = Penjualan::where('id', $id)->first();
+        return view('dashboard.halaman.penjualan.bayar', compact(['data']));
+    }
+    public function penjualanSukses(string $id){
+        $data = Penjualan::where('id', $id)->first();
+
+        return view('dashboard.halaman.penjualan.bayar-sukses', compact(['data']));
+    }
+
+    public function bayarOnline(string $id, Request $request)
+    {
+        $metode = $request->metode;
+        $bayar = $request->bayar;
+        $penjualan = Penjualan::where('id', $id)->first();
+
+        if ($metode == 'online') {
+            // Set your Merchant Server Key
+            \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+            \Midtrans\Config::$isProduction = false;
+            // Set sanitization on (default)
+            \Midtrans\Config::$isSanitized = true;
+            // Set 3DS transaction for credit card to true
+            \Midtrans\Config::$is3ds = true;
+    
+            // SNAP
+            $params = array(
+                'transaction_details' => array(
+                    'order_id' => rand(),
+                    'gross_amount' => $bayar,
+                )
+            );
+            
+            try {
+                $snapToken = \Midtrans\Snap::getSnapToken($params);
+                $penjualan->update([
+                    'snap_token' => $snapToken,
+                    'bayar' => $bayar,
+                ]);
+                if ($penjualan->grand_total <= ($bayar + $penjualan->bayar) ) {
+                    $penjualan->update([
+                        'sisa' => 0,
+                    ]);
+                }else {
+                    $penjualan->update([
+                        'status_bayar' => 'belum'
+                    ]);
+                }
+            } catch (\Exception $e) {
+                // Log the error or handle it as needed
+                error_log($e->getMessage());
+                // You can also return an error response if needed
+                return response()->json(['error' => 'Failed to get snap token. Please check your server key and environment settings.']);
+            }
+            return redirect()->route('penjualan.bayar', $penjualan->id);
+        }else{
+            $dt = [
+                'bayar' => $penjualan->grand_total,
+                'sisa' => 0,
+                'status_bayar' => 'lunas',
+            ];
+            $penjualan->update($dt);
+
+            toastr()->success('Berhasil');
+    
+            return redirect()->route('penjualan');
+        }
+
     }
 
     public function saveToLaporan(string $id){
         $penjualan = Penjualan::where('id', $id)->first();
+
         if ($penjualan) {
             $dt = [
                 'bayar' => $penjualan->grand_total,

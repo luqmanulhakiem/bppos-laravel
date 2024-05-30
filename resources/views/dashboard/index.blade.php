@@ -51,6 +51,7 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+@yield('scripts-midtrans')
 
 <!-- jQuery -->
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
