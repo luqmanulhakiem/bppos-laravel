@@ -348,12 +348,11 @@
                   </td>
                   <td>
                     <div class="btn btn-group">
-                      <a href="{{route('penjualan.edit', ['id' => $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-pen "></i> Edit</a>
-                      <button class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Cetak</button>
-                      @if ($item->sisa < 0)
-                        <a href="{{route('penjualan.store-selesai', ['id' => $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-exclamation-triangle "></i> Selesai</a>
-                      @else
+                      @if ($item->status_bayar == 'lunas')
+                        <button class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Cetak</button>
                         <a href="{{route('penjualan.store-selesai', ['id' => $item->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Selesai</a>
+                      @else
+                        <a href="{{route('penjualan.edit', ['id' => $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-pen "></i> Edit</a>
                       @endif
                     </div>
                   </td>

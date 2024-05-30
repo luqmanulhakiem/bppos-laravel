@@ -380,6 +380,7 @@ class PenjualanController extends Controller
                 ]);
                 if ($penjualan->grand_total <= ($bayar + $penjualan->bayar) ) {
                     $penjualan->update([
+                        'status_bayar' => 'lunas',
                         'sisa' => 0,
                     ]);
                 }else {
