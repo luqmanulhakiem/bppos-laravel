@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PenjualanController extends Controller
 {
@@ -26,6 +27,20 @@ class PenjualanController extends Controller
         $penjualanCount = Penjualan::with('items')->where('status', 'belum')->count();
 
         return view('dashboard.halaman.penjualan.index', compact(['currentDate', 'invoice', 'barang', 'penjualan', 'penjualanCount']));
+    }
+
+    public function cetak(string $id)
+    {
+        $data = Penjualan::with(['pelanggan'])->where('id', $id)->first();
+        $item = DB::table('penjualan_items as k')
+        ->join('barangs as b', 'b.id', '=', 'k.id_barang')
+        ->select('k.id as keranjang_id', 'k.*', 'b.*', 'b.id as barang_id')
+        ->where('k.id_penjualan', '=', $data->id)
+        ->get();
+
+        $pdf = Pdf::loadView('dashboard.halaman.penjualan.cetak', ['data' => $data, 'item' => $item]);
+        $nama = 'struk ' . $data->no_nota . '.pdf';
+        return $pdf->download($nama);
     }
 
     public function edit(string $id)

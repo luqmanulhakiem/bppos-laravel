@@ -93,7 +93,7 @@
                               <td class="text-center">
                                   <div class="btn-group">
                                     <a href="{{route('laporan-penjualan.show', ['id' => $item->id])}}" class="btn btn-sm btn-light"><i class="fa fa-eye"></i> Lihat</a>
-                                    <a href="" class="btn btn-sm bg-green"><i class="fa fa-print"></i> Cetak</a>
+                                    <a href="{{route('penjualan.cetak', ['id' => $item->id])}}" target="_blank" class="btn btn-sm bg-green"><i class="fa fa-print"></i> Cetak</a>
                                   </div>
                               </td>
                           </tr>

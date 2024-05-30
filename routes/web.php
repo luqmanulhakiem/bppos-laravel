@@ -113,6 +113,8 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::get('penjualan/bayar-sukses/{id}', 'penjualanSukses')->name('penjualan.sukses');
             // edit 
             Route::get('penjualan/edit/{id}', 'edit')->name('penjualan.edit');
+            // cetak
+            Route::get('penjualan-struk/{id}', 'cetak')->name('penjualan.cetak');
             // edit tambah barang
             Route::post('penjualan/edit/tambah-barang', 'tambahItemAntrian')->name('penjualan.edit.add');
             // edit hapus barang
