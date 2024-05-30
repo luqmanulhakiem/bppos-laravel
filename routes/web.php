@@ -6,6 +6,7 @@ use App\Http\Controllers\BarangInOutController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\DashboardHomeController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PelangganController;
@@ -37,9 +38,7 @@ Route::post('login-request', [AuthController::class, 'login'])->name('request-lo
 
 // Route Hanya bisa diakses apabila sudah login
 Route::group(['middleware' => ['auth', 'statusAkun']], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard.dashboard');
-    });
+    Route::get('dashboard', [DashboardHomeController::class, 'index']);
     Route::group(['prefix' => 'produk'], function () {
         // Route Kategori
         Route::controller(KategoriController::class)->group(function (){

@@ -253,20 +253,39 @@ class PenjualanController extends Controller
         }else {
             $data['status_bayar'] = 'belum';
         }
-        $penjualan = Penjualan::create([
-            'no_nota' => 'BP' . $data['no_nota'],
-            'id_pelanggan' => $data['id_pelanggan'],
-            'id_kasir' => $idKasir,
-            'tgl_penjualan' => $data['tgl_penjualan'],
-            'sub_total' => $data['sub_total'],
-            'diskon' => $data['diskon_sub'],
-            'grand_total' => $data['grand_total'],
-            'tgl_pengambilan' => $data['tgl_pengambilan'],
-            'bayar' => $data['bayar'],
-            'sisa' => $data['sisa'],
-            'status_bayar' => $data['status_bayar'],
-            'catatan' => $data['catatan'],
-        ]);
+        if ($data['metode'] == 'online') {
+            $penjualan = Penjualan::create([
+                'no_nota' => 'BP' . $data['no_nota'],
+                'id_pelanggan' => $data['id_pelanggan'],
+                'id_kasir' => $idKasir,
+                'tgl_penjualan' => $data['tgl_penjualan'],
+                'sub_total' => $data['sub_total'],
+                'diskon' => $data['diskon_sub'],
+                'grand_total' => $data['grand_total'],
+                'tgl_pengambilan' => $data['tgl_pengambilan'],
+                'bayar' => $data['bayar'] + ( $data['bayar'] * 2 / 100 ),
+                'sisa' => $data['sisa'],
+                'status_bayar' => $data['status_bayar'],
+                'catatan' => $data['catatan'],
+            ]);
+        }else{
+            $penjualan = Penjualan::create([
+                'no_nota' => 'BP' . $data['no_nota'],
+                'id_pelanggan' => $data['id_pelanggan'],
+                'id_kasir' => $idKasir,
+                'tgl_penjualan' => $data['tgl_penjualan'],
+                'sub_total' => $data['sub_total'],
+                'diskon' => $data['diskon_sub'],
+                'grand_total' => $data['grand_total'],
+                'tgl_pengambilan' => $data['tgl_pengambilan'],
+                'bayar' => $data['bayar'],
+                'sisa' => $data['sisa'],
+                'status_bayar' => $data['status_bayar'],
+                'catatan' => $data['catatan'],
+            ]);
+
+        }
+
 
         $keranjang = Keranjang::where('id_pelanggan', $data['id_pelanggan'])->get();
         if ($penjualan) {
@@ -328,10 +347,12 @@ class PenjualanController extends Controller
             \Midtrans\Config::$is3ds = true;
 
             // SNAP
+            $bayar = $data['bayar'] + ( $data['bayar'] * 2 / 100 );
+
             $params = array(
                 'transaction_details' => array(
                     'order_id' => rand(),
-                    'gross_amount' => $data['bayar'],
+                    'gross_amount' => $bayar,
                 )
             );
             
@@ -391,7 +412,7 @@ class PenjualanController extends Controller
                 $snapToken = \Midtrans\Snap::getSnapToken($params);
                 $penjualan->update([
                     'snap_token' => $snapToken,
-                    'bayar' => $bayar,
+                    'bayar' => $bayar + ($bayar * 2 / 100),
                 ]);
                 if ($penjualan->grand_total <= ($bayar + $penjualan->bayar) ) {
                     $penjualan->update([
