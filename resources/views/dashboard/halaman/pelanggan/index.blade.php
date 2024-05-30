@@ -44,7 +44,7 @@
                         <tr>
                         <th style="width: 10px">#</th>
                         <th>Nama</th>
-                        <th>QrCode</th>
+                        {{-- <th>QrCode</th> --}}
                         <th>Gender</th>
                         <th>Telepon</th>
                         <th>Alamat</th>
@@ -62,7 +62,7 @@
                           <tr>
                               <td>{{$number++}}</td>
                               <td>{{$item->nama}}</td>
-                              <td>{{QrCode::size(256)->generate($item->kode)}}</td>
+                              {{-- <td>{{QrCode::size(256)->generate($item->kode)}}</td> --}}
                               <td>{{ $item->gender == 'L' ? 'Laki-Laki' : 'Perempuan'}}</td>
                               <td>{{$item->telp}}</td>
                               <td>{{$item->alamat}}</td>

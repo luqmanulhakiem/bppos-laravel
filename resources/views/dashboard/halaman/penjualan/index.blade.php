@@ -64,9 +64,10 @@
                                 <input type="hidden" name="id_pelanggan" id="id_pelanggan">
                                 <input type="hidden" name="level_pelanggan">
                                 <select class="form-control" id="cari-pelanggan" style="width: calc(100% - 38px);"></select>
-                                <div class="input-group-prepend" style="width: 38px;">
+                                {{-- QrCode User --}}
+                                {{-- <div class="input-group-prepend" style="width: 38px;">
                                   <button class="btn btn-dark" type="button" style="width: 100%;"><i class="fa fa-qrcode"></i></button>
-                                </div>
+                                </div> --}}
                             </div>
                           </div>
                         </div>
@@ -218,14 +219,14 @@
               <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row form-group">
-                          <div class="col-4">
-                            <label for="">Pengambilan</label>
-                          </div>
-                          <div class="col-8">
-                            <input type="date" name="tgl_pengambilan" id="" class="form-control" required>
-                          </div>
-                        </div>
+                        {{-- <div class="row form-group"> --}}
+                          {{-- <div class="col-4"> --}}
+                            {{-- <label for="">Pengambilan</label> --}}
+                          {{-- </div> --}}
+                          {{-- <div class="col-8"> --}}
+                            <input type="date" name="tgl_pengambilan" value="{{$currentDate}}" id="" class="form-control" hidden>
+                          {{-- </div> --}}
+                        {{-- </div> --}}
                         <div class="row form-group">
                           <div class="col-4">
                             <label for="">Bayar</label>

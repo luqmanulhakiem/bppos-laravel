@@ -242,14 +242,14 @@
               <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row form-group">
+                        {{-- <div class="row form-group">
                           <div class="col-4">
                             <label for="">Pengambilan</label>
                           </div>
                           <div class="col-8">
                             <input type="date" name="tgl_pengambilan" value="{{$penjualan->tgl_pengambilan}}" id="" class="form-control" readonly>
                           </div>
-                        </div>
+                        </div> --}}
                         
                         <div class="row form-group">
                           <div class="col-4">

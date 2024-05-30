@@ -87,8 +87,10 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             Route::post('barang/tambah/simpan', 'store')->name('simpan-barang');
             // // tampilan edit
             Route::get('barang/edit/{id}', 'edit')->name('edit-barang');
+            Route::get('barang/edit-stok/{id}', 'editStok')->name('edit-barang.stok');
             // // simpan edit
             Route::post('barang/edit/{id}/update', 'update')->name('update-barang');
+            Route::post('barang/edit-stok/{id}/update', 'updateStok')->name('update-barang.stok');
             // // hapus
             Route::delete('barang/hapus/{id}', 'destroy')->name('hapus-barang');
         });

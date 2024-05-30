@@ -112,7 +112,7 @@
                     <p>Penjualan</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/transaksi/barang-masuk" class="nav-link {{ Request::is(['transaksi/barang-masuk', 'transaksi/barang-masuk/tambah', 'transaksi/barang-masuk/show/*', 'transaksi/barang-masuk/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Barang Masuk</p>
@@ -123,7 +123,7 @@
                     <i class="far fa-circle nav-icon"></i>
                     <p>Barang Keluar</p>
                     </a>
-                </li>
+                </li> --}}
                 </ul>
             </li>
             <li class="nav-item {{ Request::is(['laporan/*']) ? 'menu-open' : '' }}">
@@ -141,12 +141,12 @@
                     <p>Penjualan</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/laporan/barang-in-out" class="nav-link {{ Request::is(['laporan/barang-in-out', 'laporan/barang-in-out/search']) ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Barang Masuk/Keluar</p>
                     </a>
-                </li>
+                </li> --}}
                 </ul>
             </li>
 

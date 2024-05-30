@@ -114,6 +114,16 @@ class BarangController extends Controller
         // diarahkan ke halaman edit
         return view('dashboard.halaman.barang.edit', compact('data', 'kategori', 'satuan'));
     }
+    public function editStok(string $id)
+    {
+        $kategori = Kategori::get();
+        $satuan = Unit::get();
+
+        // ambil data berdasarkan id
+        $data = Barang::findorfail($id);
+        // diarahkan ke halaman edit
+        return view('dashboard.halaman.barang.edit-stok', compact('data', 'kategori', 'satuan'));
+    }
 
     // /**
     //  * Simpan Hasil Edit.
@@ -135,6 +145,46 @@ class BarangController extends Controller
                 'jenis' => $data['jenis'],
             ];
 
+            // Simpan Perubahan Data
+            $update = $find->update($dt);
+
+            if ($update) {
+                // pesan sukses
+                toastr()->success('Berhasil Mengubah Data');
+                // redirect kehalaman barang
+                return redirect()->route('barang');
+            }
+
+            // pesan gagal
+            toastr()->error('Gagal');
+            // redirect kembali
+            return back();
+        }
+
+    }
+    public function updateStok(Request $request, string $id)
+    {
+        // ambil data input
+        $stok = $request->stok;
+        $stok_p = $request->stok_p;
+        $stok_l = $request->stok_l;
+
+        // cari data yang akan di edit berdasarkan id
+        $find = Barang::where('id', $id)->first();
+
+        if ($find) {
+            // List Perubahan Data
+            if ($find->jenis == 1) {
+                $dt = [
+                    'stok' => $stok,
+                ];
+            } else {
+                $dt = [
+                    'stok_p' => $stok_p,
+                    'stok_l' => $stok_l,
+                ];
+            }
+            
             // Simpan Perubahan Data
             $update = $find->update($dt);
 
