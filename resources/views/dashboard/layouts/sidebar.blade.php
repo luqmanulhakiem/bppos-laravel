@@ -98,7 +98,7 @@
                 </ul>
             </li>
             <li class="nav-item {{ Request::is(['transaksi/*', 'rekap-laporan-harian/*']) ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is(['transaksi/*']) ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ Request::is(['transaksi/*', 'rekap-laporan-harian/*']) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-shopping-cart"></i>
                 <p>
                     Transaksi
@@ -133,14 +133,14 @@
                 <li class="nav-item">
                     <a href="{{route('laporan.harian', ['tanggal' => $today])}}" class="nav-link {{ Request::is('rekap-laporan-harian/*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Harian</p>
+                    <p>Pembukuan</p>
                     </a>
                 </li>
                 </ul>
             </li>
             {{-- <li class="nav-header">Laporan</li> --}}
-            <li class="nav-item {{ Request::is(['laporan/*']) ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is(['laporan/*']) ? 'active' : '' }}">
+            <li class="nav-item {{ Request::is(['laporan/*', 'laporan-omset/*']) ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Request::is(['laporan/*', 'laporan-omset/*']) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
                     Laporan
@@ -152,6 +152,12 @@
                     <a href="{{route('laporan-penjualan')}}" class="nav-link {{ Request::is('laporan/penjualan') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Penjualan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('omset.harian', ['tanggal' => $today])}}" class="nav-link {{ Request::is('laporan-omset/*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Omset</p>
                     </a>
                 </li>
 {{--                 

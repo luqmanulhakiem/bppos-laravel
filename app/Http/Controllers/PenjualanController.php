@@ -6,8 +6,10 @@ use App\Http\Requests\KeranjangRequest;
 use App\Http\Requests\PenjualanItemAddRequest;
 use App\Http\Requests\PenjualanRequest;
 use App\Models\Barang;
+use App\Models\Harga;
 use App\Models\Keranjang;
 use App\Models\LaporanPenjualan;
+use App\Models\OmsetBarang;
 use App\Models\Pelanggan;
 use App\Models\Penjualan;
 use App\Models\PenjualanItem;
@@ -70,6 +72,8 @@ class PenjualanController extends Controller
     public function tambahItemAntrian(PenjualanItemAddRequest $request)
     {
         $data = $request->validated();
+        $barang = Barang::where('id', $data['id_barang'])->first();
+
 
         if ($data['jenis'] == 1) {
             $data['total'] =  ($data['harga'] - 0) * $data['kuantitas'];
@@ -83,6 +87,16 @@ class PenjualanController extends Controller
                 'kuantitas' => $data['kuantitas'],
                 'total' => $data['total'],
             ]);
+            // add barang keluar
+            $harga = Harga::findorfail($barang->id_harga);
+            OmsetBarang::create([
+                'kode_barang' => $barang->kode,
+                'nama_barang' => $barang->nama,
+                'kuantiti' => $data['kuantitas'],
+                'hpp' => $harga->hpp,
+                'harga_jual' => $data['harga'],
+                'profit' => $data['harga'] - $harga->hpp,
+            ]);
         } else {
             $data['total'] = (($data['ukuran_p'] * $data['ukuran_l']) * $data['harga']) * $data['kuantitas'];
             PenjualanItem::create([
@@ -94,6 +108,19 @@ class PenjualanController extends Controller
                 'diskon' => 0,
                 'kuantitas' => $data['kuantitas'],
                 'total' => $data['total'],
+            ]);
+
+            // add barang keluar
+            $harga = Harga::findorfail($barang->id_harga);
+            OmsetBarang::create([
+                'kode_barang' => $barang->kode,
+                'nama_barang' => $barang->nama,
+                'ukuran_p' => $data['ukuran_p'],
+                'ukuran_l' => $data['ukuran_l'],
+                'kuantiti' => $data['kuantitas'],
+                'hpp' => $harga->hpp,
+                'harga_jual' => $data['harga'],
+                'profit' => $data['harga'] - $harga->hpp,
             ]);
         }
 
@@ -349,6 +376,17 @@ class PenjualanController extends Controller
                     $dt = [
                         'stok' => $barang->stok - $item->kuantitas,
                     ];
+
+                    // add barang keluar
+                    $harga = Harga::findorfail($barang->id_harga);
+                    OmsetBarang::create([
+                        'kode_barang' => $barang->kode,
+                        'nama_barang' => $barang->nama,
+                        'kuantiti' => $item->kuantitas,
+                        'hpp' => $harga->hpp,
+                        'harga_jual' => $item->harga,
+                        'profit' => $item->harga - $harga->hpp,
+                    ]);
                 }else{
                     $formData = [
                         'id_penjualan' => $penjualan->id,
@@ -366,6 +404,18 @@ class PenjualanController extends Controller
                     $dt = [
                         'stok' => $stokPL,
                     ];
+                    // add barang keluar
+                    $harga = Harga::findorfail($barang->id_harga);
+                    OmsetBarang::create([
+                        'kode_barang' => $barang->kode,
+                        'nama_barang' => $barang->nama,
+                        'ukuran_p' => $item->ukuran_p,
+                        'ukuran_l' => $item->ukuran_l,
+                        'kuantiti' => $item->kuantitas,
+                        'hpp' => $harga->hpp,
+                        'harga_jual' => $item->harga,
+                        'profit' => $item->harga - $harga->hpp,
+                    ]);
                 }
                 $barang->update($dt);
                 PenjualanItem::create($formData);

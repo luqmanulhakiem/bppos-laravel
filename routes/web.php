@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardHomeController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\OmsetBarangController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenjualanController;
@@ -216,6 +217,10 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
         // index harian
         Route::get('rekap-laporan-harian/{tanggal}', 'indexHarian')->name('laporan.harian');
         Route::get('rekap-laporan-bulanan/{bulan}/{tahun}', 'indexBulanan')->name('laporan.bulanan');
+    });
+    Route::controller(OmsetBarangController::class)->group(function (){
+        // index harian
+        Route::get('laporan-omset/{tanggal}', 'index')->name('omset.harian');
     });
     Route::controller(SaldoController::class)->group(function (){
         Route::get('saldo/{tanggal}', 'edit')->name('saldo.harian');
