@@ -35,12 +35,48 @@
                     <p class="row">
                       <?php 
                         $date = Carbon\Carbon::parse('2024-06-04');
-                        $formattedDate = $date->format('D, d F Y');
+                        function translateToIndonesian($formattedDate) {
+                            $dayMap = [
+                                'Sun' => 'Minggu',
+                                'Mon' => 'Senin',
+                                'Tue' => 'Selasa',
+                                'Wed' => 'Rabu',
+                                'Thu' => 'Kamis',
+                                'Fri' => 'Jumat',
+                                'Sat' => 'Sabtu'
+                            ];
+
+                            $monthMap = [
+                                'January' => 'Januari',
+                                'February' => 'Februari',
+                                'March' => 'Maret',
+                                'April' => 'April',
+                                'May' => 'Mei',
+                                'June' => 'Juni',
+                                'July' => 'Juli',
+                                'August' => 'Agustus',
+                                'September' => 'September',
+                                'October' => 'Oktober',
+                                'November' => 'November',
+                                'December' => 'Desember'
+                            ];
+
+                            // Translate day and month
+                            $formattedDate = strtr($formattedDate, $dayMap);
+                            $formattedDate = strtr($formattedDate, $monthMap);
+
+                            // Remove leading zeros from the day
+                            $formattedDate = preg_replace('/\b0(?=\d)/', '', $formattedDate);
+
+                            return $formattedDate;
+                        }
+                        $formattedDate = $date->format('D, d F Y'); //Tue, 04 June 2024
+                        $formatIndo = translateToIndonesian($formattedDate); //Tue, 04 June 2024
                         ?>
                       <div class="">
                         SALDO AKHIR = SALDO AWAL + TOTAL MASUK - TOTAL KELUAR
                       </div>
-                      <div class="text-center">{{$formattedDate}}</div>
+                      <h2 class="text-center">{{$formatIndo}}</h2>
                     </p>
                   <div class="text-center">
                     <a href="" class="btn btn-primary">Saldo Awal</a>
