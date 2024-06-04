@@ -17,6 +17,7 @@ class UnitSeeder extends Seeder
         $arraySatuan = [
             ['id' => 1, 'nama' => 'cm'],
             ['id' => 2, 'nama' => 'm'],
+            ['id' => 3, 'nama' => 'Satuan'],
         ];
 
         // membuat list supplier sebanyak list diatas

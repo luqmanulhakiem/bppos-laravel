@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('kode');
             $table->string('nama');
             $table->enum('jenis', ['1','2']); //1 = Buah(X Lembar), 2 = Dimens(X Ukuran)
+            $table->enum('status', ['active','disable']); //1 = Buah(X Lembar), 2 = Dimens(X Ukuran)
             $table->integer('stok')->default('0');
-            $table->integer('stok_p')->default('0');
-            $table->integer('stok_l')->default('0');
             $table->bigInteger('id_kategori')->constrained('kategoris')->cascadeOnUpdate()->cascadeOnDelete();
             $table->bigInteger('id_satuan')->constrained('units')->cascadeOnUpdate()->cascadeOnDelete();
             $table->bigInteger('id_harga')->constrained('hargas')->cascadeOnUpdate()->cascadeOnDelete();

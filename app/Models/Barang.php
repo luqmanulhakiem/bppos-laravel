@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Barang extends Model
 {
     use HasFactory;
-    protected $fillable = ['kode', 'nama', 'jenis', 'stok', 'stok_p', 'stok_l', 'id_kategori', 'id_satuan', 'id_harga'];
+    protected $fillable = ['kode', 'nama', 'jenis', 'stok', 'id_kategori', 'id_satuan', 'id_harga', 'status'];
 
     public function kategori(): HasOne
     {

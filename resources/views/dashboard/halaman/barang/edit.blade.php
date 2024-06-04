@@ -58,11 +58,8 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label>Jenis<b class="text-danger">*</b></label>
-                      <select name="jenis" class="form-control">
-                        <option value="1" @if ($data->jenis == '1') {{ 'selected' }} @endif>Pcs/Unit</option>
-                        <option value="2" @if ($data->jenis == '2') {{ 'selected' }} @endif>Dimensi/Ukuran</option>
-                      </select>
+                      <label>Stok<b class="text-danger">*</b></label>
+                      <input type="text" class="form-control" placeholder="stok" name="stok" value="{{$data->stok}}" required>
                     </div>
                     <br>
                     <button class="btn btn-submit btn-primary float-right"><i class="fa fa-save"></i> Simpan</button>

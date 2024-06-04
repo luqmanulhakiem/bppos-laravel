@@ -67,23 +67,11 @@
                               <td>{{$item->satuan->nama}}</td>
                               <td>{{$item->jenis == 1 ? "X Lembar" : "X Ukuran"}}</td>
                               <td>
-                                @if ($item->jenis == 1)
-                                  @if ($item->id_satuan == 1)
-                                    {{$item->stok / 100}}
-                                  @else
-                                    {{$item->stok}}
-                                  @endif
-                                @else
-                                  @if ($item->id_satuan == 1)
-                                    {{$item->stok_p / 100}} X {{$item->stok_l/100}}
-                                    @else
-                                    {{$item->stok_p}} X {{$item->stok_l}}
-                                  @endif
-                                @endif
+                                  {{$item->stok}}
                               </td>
                               <td class="text-center">
                                   <div class="btn-group">
-                                      <a href="{{route('edit-barang.stok', ['id'=> $item->id])}}" class="btn btn-sm btn-secondary"><i class="fa fa-edit"></i> Edit Stok</a>
+                                      {{-- <a href="{{route('edit-barang.stok', ['id'=> $item->id])}}" class="btn btn-sm btn-secondary"><i class="fa fa-edit"></i> Edit Stok</a> --}}
                                       <a href="{{route('edit-barang', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>
                                       <a href="{{route('hapus-barang', ['id'=> $item->id])}}" data-confirm-delete="true" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus </a>
                                   </div>

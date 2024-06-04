@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Harga extends Model
 {
     use HasFactory;
-    protected $fillable = ['umum', 'reseller1', 'reseller2', 'reseller3', 'reseller4'];
+    protected $fillable = ['hpp', 'umum', 'reseller1', 'reseller2'];
     
     public function barang(): BelongsTo
     {

@@ -77,6 +77,11 @@ class BarangController extends Controller
         $data = $request->validated();
 
         $harga = Harga::create([]);
+        if ($data['id_satuan'] == 3) {
+            $data['jenis'] = 1;
+        }else{
+            $data['jenis'] = 2;
+        }
 
         // membuat data supplier
         $simpan = Barang::create([
@@ -84,7 +89,8 @@ class BarangController extends Controller
             'id_kategori' => $data['id_kategori'],
             'id_satuan' => $data['id_satuan'],
             'id_harga' => $harga->id,
-            'jenis' => $data['jenis']
+            'jenis' => $data['jenis'],
+            'stok' => $data['stok']
         ]);
 
         // cek kondisi simpan berhasil
@@ -136,6 +142,12 @@ class BarangController extends Controller
         // cari data yang akan di edit berdasarkan id
         $find = Barang::where('id', $id)->first();
 
+        if ($data['id_satuan'] == 3) {
+            $data['jenis'] = 1;
+        }else{
+            $data['jenis'] = 2;
+        }
+
         if ($find) {
             // List Perubahan Data
             $dt = [
@@ -143,6 +155,7 @@ class BarangController extends Controller
                 'id_kategori' => $data['id_kategori'],
                 'id_satuan' => $data['id_satuan'],
                 'jenis' => $data['jenis'],
+                'stok' => $data['stok'],
             ];
 
             // Simpan Perubahan Data
@@ -166,24 +179,15 @@ class BarangController extends Controller
     {
         // ambil data input
         $stok = $request->stok;
-        $stok_p = $request->stok_p;
-        $stok_l = $request->stok_l;
 
         // cari data yang akan di edit berdasarkan id
         $find = Barang::where('id', $id)->first();
 
         if ($find) {
             // List Perubahan Data
-            if ($find->jenis == 1) {
-                $dt = [
-                    'stok' => $stok,
-                ];
-            } else {
-                $dt = [
-                    'stok_p' => $stok_p,
-                    'stok_l' => $stok_l,
-                ];
-            }
+            $dt = [
+                'stok' => $stok,
+            ];
             
             // Simpan Perubahan Data
             $update = $find->update($dt);

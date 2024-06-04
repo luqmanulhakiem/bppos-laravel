@@ -25,7 +25,8 @@ class BarangRequest extends FormRequest
             'nama' => 'required',
             'id_kategori' => 'required',
             'id_satuan' => 'required',
-            'jenis' => 'required',
+            'jenis' => 'nullable',
+            'stok' => 'required',
         ];
     }
 }

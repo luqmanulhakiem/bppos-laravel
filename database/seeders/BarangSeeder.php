@@ -15,26 +15,24 @@ class BarangSeeder extends Seeder
     public function run(): void
     {
         $harga = Harga::create([
-            'umum' => '50000',
-            'reseller1' => '10000',
-            'reseller2' => '20000',
-            'reseller3' => '30000',
-            'reseller4' => '40000',
+            'hpp' => '10000',
+            'umum' => '30000',
+            'reseller1' => '2000',
+            'reseller2' => '15000',
         ]);
 
         $harga2 = Harga::create([
-            'umum' => '80000',
-            'reseller1' => '10000',
-            'reseller2' => '20000',
-            'reseller3' => '30000',
-            'reseller4' => '40000',
+            'hpp' => '5000',
+            'umum' => '10000',
+            'reseller1' => '7000',
+            'reseller2' => '6000',
         ]);
 
         Barang::create([
             'nama' => 'Art Paper',
             'jenis' => '1',
             'id_kategori'=> '1',
-            'id_satuan' => '1',
+            'id_satuan' => '3',
             'stok' => '9',
             'id_harga' => $harga->id
         ]);
@@ -44,8 +42,7 @@ class BarangSeeder extends Seeder
             'jenis' => '2',
             'id_kategori'=> '1',
             'id_satuan' => '1',
-            'stok_p' => '9',
-            'stok_l' => '10',
+            'stok' => '10',
             'id_harga' => $harga2->id
         ]);
     }
