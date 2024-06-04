@@ -9,6 +9,7 @@ use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardHomeController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenjualanController;
@@ -209,6 +210,11 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
         Route::post('penyuplai/edit/{id}/update', 'update')->name('update-penyuplai');
         // hapus
         Route::delete('penyuplai/hapus/{id}', 'destroy')->name('hapus-penyuplai');
+    });
+    Route::controller(LaporanController::class)->group(function (){
+        // index harian
+        Route::get('rekap-laporan-harian/{tanggal}', 'indexHarian')->name('laporan.harian');
+        Route::get('rekap-laporan-bulanan/{bulan}/{tahun}', 'indexBulanan')->name('laporan.bulanan');
     });
     // Route Pelanggan
     Route::controller(PelangganController::class)->group(function (){

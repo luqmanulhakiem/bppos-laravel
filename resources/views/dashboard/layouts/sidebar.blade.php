@@ -126,19 +126,38 @@
                 </li> --}}
                 </ul>
             </li>
-            <li class="nav-item {{ Request::is(['laporan/*']) ? 'menu-open' : '' }}">
+            <li class="nav-header">Laporan</li>
+            <li class="nav-item {{ Request::is(['rekap-laporan-*/*']) ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link {{ Request::is(['laporan/*']) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
-                    Laporan
+                    Penjualan
                     <i class="fas fa-angle-left right"></i>
                 </p>
                 </a>
+                <?php 
+                    $carbon = \Illuminate\Support\Carbon::now(); 
+                    $today = $carbon->format('Y-m-d');
+                    $month = $carbon->format('m');
+                    $year = $carbon->format('Y');
+                ?>
                 <ul class="nav nav-treeview">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{route('laporan-penjualan')}}" class="nav-link {{ Request::is('laporan/penjualan') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Penjualan</p>
+                    </a>
+                </li> --}}
+                <li class="nav-item">
+                    <a href="{{route('laporan.harian', ['tanggal' => $today])}}" class="nav-link {{ Request::is('rekap-laporan-harian/*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Harian</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('laporan.bulanan', ['bulan' => $month, 'tahun' => $year])}}" class="nav-link {{ Request::is('rekap-laporan-bulanan/*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Bulanan</p>
                     </a>
                 </li>
                 {{-- <li class="nav-item">
