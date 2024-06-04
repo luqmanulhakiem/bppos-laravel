@@ -200,7 +200,7 @@ class PenjualanController extends Controller
                 'total' => $data['total'],
             ]);
         } else {
-            $data['total'] = (($data['ukuran_p'] * $data['ukuran_l']) * (($data['harga'] - 0) / (100 * 100))) * $data['kuantitas'];
+            $data['total'] = (($data['ukuran_p'] * $data['ukuran_l']) * $data['harga']) * $data['kuantitas'];
             Keranjang::create([
                 'id_pelanggan' => $data['id_pelanggan'],
                 'id_barang' => $data['id_barang'],
@@ -294,23 +294,7 @@ class PenjualanController extends Controller
                 $formData = [];
                 $barang = Barang::where('id', $item->id_barang)->first();
                 $dt = [];
-                if ($item->ukuran == null) {
-                    $formData = [
-                        'id_penjualan' => $penjualan->id,
-                        'id_barang' => $item->id_barang,
-                        'ukuran_p' => $item->ukuran_p,
-                        'ukuran_l' => $item->ukuran_l,
-                        'harga' => $item->harga,
-                        'kuantitas' => $item->kuantitas,
-                        'diskon' => $item->diskon,
-                        'total' => $item->total,
-                    ];
-
-                    $dt = [
-                        'stok_p' => $barang->stok_p - $item->ukuran_p,
-                        'stok_l' => $barang->stok_l - $item->ukuran_l,
-                    ];
-                }else{
+                if ($item->ukuran == 'Pcs/Unit') {
                     $formData = [
                         'id_penjualan' => $penjualan->id,
                         'id_barang' => $item->id_barang,
@@ -323,6 +307,23 @@ class PenjualanController extends Controller
 
                     $dt = [
                         'stok' => $barang->stok - $item->kuantitas,
+                    ];
+                }else{
+                    $formData = [
+                        'id_penjualan' => $penjualan->id,
+                        'id_barang' => $item->id_barang,
+                        'ukuran_p' => $item->ukuran_p,
+                        'ukuran_l' => $item->ukuran_l,
+                        'harga' => $item->harga,
+                        'kuantitas' => $item->kuantitas,
+                        'diskon' => $item->diskon,
+                        'total' => $item->total,
+                    ];
+
+                    $stokPL = $barang->stok - ($item->ukuran_p * $item->ukuran_l);
+
+                    $dt = [
+                        'stok' => $stokPL,
                     ];
                 }
                 $barang->update($dt);
