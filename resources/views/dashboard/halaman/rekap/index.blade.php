@@ -70,8 +70,8 @@
 
                             return $formattedDate;
                         }
-                        $formattedDate = $date->format('D, d F Y'); //Tue, 04 June 2024
-                        $formatIndo = translateToIndonesian($formattedDate); //Tue, 04 June 2024
+                        $formattedDate = $date->format('D, d F Y'); 
+                        $formatIndo = translateToIndonesian($formattedDate); 
                         ?>
                       <div class="">
                         SALDO AKHIR = SALDO AWAL + TOTAL MASUK - TOTAL KELUAR
@@ -79,8 +79,8 @@
                       <h2 class="text-center">{{$formatIndo}}</h2>
                     </p>
                   <div class="text-center">
-                    <a href="" class="btn btn-primary">Saldo Awal</a>
-                    <a href="" class="btn btn-primary">Pengeluaran</a>
+                    <a href="{{route('saldo.harian', ['tanggal' => $tanggal])}}" class="btn btn-primary">Saldo Awal</a>
+                    <a href="{{route('saldo.harian.pengeluaran', ['tanggal' => $tanggal])}}" class="btn btn-primary">Pengeluaran</a>
                   </div>
                 </div>
               </div>
@@ -94,7 +94,12 @@
                     <div class="card-body">
                       <p>Saldo Awal</p>
                       <hr>
-                      <h1>Rp. 4000000</h1>
+                      @if (is_null($saldo))
+                          <h1>Rp. 0</h1>
+                      @else
+                      <h1>Rp. {{$saldo->awal}}</h1>
+                          
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -103,7 +108,11 @@
                     <div class="card-body">
                       <p>Saldo Akhir</p>
                       <hr>
-                      <h1>Rp. 4000000</h1>
+                      @if (is_null($saldo))
+                          <h1>Rp. 0</h1>
+                      @else
+                      <h1>Rp. {{$saldo->akhir}}</h1>
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -112,7 +121,11 @@
                     <div class="card-body">
                       <p>Total Pemasukan</p>
                       <hr>
-                      <h1>Rp. 4000000</h1>
+                      @if (is_null($saldo))
+                          <h1>Rp. 0</h1>
+                      @else
+                      <h1>Rp. {{$saldo->pemasukan}}</h1>
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -121,7 +134,11 @@
                     <div class="card-body">
                       <p>Total Pengeluaran</p>
                       <hr>
-                      <h1>Rp. 4000000</h1>
+                      @if (is_null($saldo))
+                          <h1>Rp. 0</h1>
+                      @else
+                      <h1>Rp. {{$saldo->pengeluaran}}</h1>
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -150,7 +167,6 @@
                           </div>
                       </div>
                     @endif
-    
                     @if (Request::is('rekap-laporan-bulanan/*'))
                       <div class="col-md-2">
                         <label for="month">Bulan:</label>

@@ -15,6 +15,7 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PenjualanLaporanController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -215,6 +216,12 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
         // index harian
         Route::get('rekap-laporan-harian/{tanggal}', 'indexHarian')->name('laporan.harian');
         Route::get('rekap-laporan-bulanan/{bulan}/{tahun}', 'indexBulanan')->name('laporan.bulanan');
+    });
+    Route::controller(SaldoController::class)->group(function (){
+        Route::get('saldo/{tanggal}', 'edit')->name('saldo.harian');
+        Route::post('saldo-update/{tanggal}', 'update')->name('saldo.harian.update');
+        Route::get('saldo-pengeluaran/{tanggal}', 'pengeluaran')->name('saldo.harian.pengeluaran');
+        Route::post('saldo-pengeluaran-update/{tanggal}', 'updatePengeluaran')->name('saldo.harian.update.pengeluaran');
     });
     // Route Pelanggan
     Route::controller(PelangganController::class)->group(function (){

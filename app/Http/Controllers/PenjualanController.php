@@ -11,6 +11,7 @@ use App\Models\LaporanPenjualan;
 use App\Models\Pelanggan;
 use App\Models\Penjualan;
 use App\Models\PenjualanItem;
+use App\Models\Saldo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -244,9 +245,48 @@ class PenjualanController extends Controller
 
     public function simpanKeranjang(PenjualanRequest $request)
     {
+        //add schedule
+        $carbon = Carbon::now();
+        $check = Penjualan::whereDate('created_at', $carbon)->first();
+        // return response()->json($check);
+        if (empty($check) || $check == null) {
+            Saldo::create(['awal' => 0]);
+        }
+
         $data = $request->validated();
 
         $idKasir = auth()->user()->id;
+
+        // Add Laporan
+        $keterangaN = '';
+        if ($data['sisa'] == 0) {
+            $keterangaN = 'Pembayaran Lunas Pesanan';
+        }else{
+            $keterangaN = 'Pembayaran DP Pesanan';
+        }
+        LaporanPenjualan::create([
+            'keterangan' => $keterangaN,
+            'no_nota' => 'BP' . $data['no_nota'],
+            'masuk' => $data['bayar'],
+            'id_admin' => $idKasir,
+        ]);
+        // Add Pemasukan Saldo
+        $saldoFind = Saldo::whereDate('created_at', $carbon)->first();
+        if ($saldoFind->pemasukan != 0) {
+            $saldoFind->update([
+                'pemasukan' => $saldoFind->pemasukan + $data['bayar']
+            ]);
+            $saldoFind->update([
+                'akhir' => ($saldoFind->awal + $saldoFind->pemasukan) - $saldoFind->pengeluaran
+            ]);
+        }else{
+            $saldoFind->update([
+                'pemasukan' => $data['bayar']
+            ]);
+            $saldoFind->update([
+                'akhir' => ($saldoFind->awal + $saldoFind->pemasukan) - $saldoFind->pengeluaran
+            ]);
+        }
 
         if ($data['grand_total'] <= $data['bayar'] ) {
             $data['sisa'] = 0;
@@ -332,20 +372,6 @@ class PenjualanController extends Controller
                 $item->delete();
             }
             Keranjang::truncate();
-
-            // Add Laporan
-            $keterangaN = '';
-            if ($data['sisa'] == 0) {
-                $keterangaN = 'Pembayaran Lunas Pesanan';
-            }else{
-                $keterangaN = 'Pembayaran DP Pesanan';
-            }
-            LaporanPenjualan::create([
-                'keterangan' => $keterangaN,
-                'no_nota' => 'BP' . $data['no_nota'],
-                'masuk' => $data['bayar'],
-                'id_admin' => $idKasir,
-            ]);
         }else{
             toastr()->error('Gagal');
             return redirect()->back()->withInput();
@@ -387,7 +413,7 @@ class PenjualanController extends Controller
         }else{
             toastr()->success('Berhasil');
             return redirect()->route('penjualan');
-        }
+        }        
     }
 
     public function penjualanBayar(string $id){

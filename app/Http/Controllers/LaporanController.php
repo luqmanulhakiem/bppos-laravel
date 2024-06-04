@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\LaporanPenjualan;
+use App\Models\Saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
     public function indexHarian(string $tanggal){
+        $saldo = Saldo::whereDate('created_at', $tanggal)->first();
+
         $data = DB::table('laporan_penjualans as lp')
         ->join('users as u','u.id','=', 'lp.id_admin')
         ->whereDate('lp.created_at','=', $tanggal)
@@ -17,7 +20,7 @@ class LaporanController extends Controller
         ->latest()
         ->paginate(50);
         // $data = LaporanPenjualan::whereDate('created_at', $tanggal)->orderBy('created_at', 'desc')->latest()->paginate(50);
-        return view('dashboard.halaman.rekap.index', compact('data', 'tanggal'));
+        return view('dashboard.halaman.rekap.index', compact('data', 'tanggal', 'saldo'));
     }
 
     public function indexBulanan(string $bulan, string $tahun){

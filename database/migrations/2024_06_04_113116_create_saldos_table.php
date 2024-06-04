@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('saldos', function (Blueprint $table) {
             $table->id();
-            $table->integer('awal');
-            $table->integer('akhir');
-            $table->integer('pemasukan');
-            $table->integer('pengeluaran');
-            $table->integer('profit');
+            $table->integer('awal')->default(0);
+            $table->integer('akhir')->default(0);
+            $table->integer('pemasukan')->default(0);
+            $table->integer('pengeluaran')->default(0);
+            $table->integer('profit')->default(0);
             $table->timestamps();
         });
     }
