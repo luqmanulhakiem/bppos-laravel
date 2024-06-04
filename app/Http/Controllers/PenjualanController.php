@@ -7,6 +7,7 @@ use App\Http\Requests\PenjualanItemAddRequest;
 use App\Http\Requests\PenjualanRequest;
 use App\Models\Barang;
 use App\Models\Keranjang;
+use App\Models\LaporanPenjualan;
 use App\Models\Pelanggan;
 use App\Models\Penjualan;
 use App\Models\PenjualanItem;
@@ -149,7 +150,7 @@ class PenjualanController extends Controller
     {
         $id = $request->id_pelanggan;
         $pelanggan = Pelanggan::where('id', $id)->first();
-        $barang = Barang::with(['kategori', 'satuan', 'harga'])->paginate('10');
+        $barang = Barang::with(['kategori', 'satuan', 'harga'])->where('status','active')->paginate('10');
         return response()->json([
             'pelanggan' => $pelanggan,
             'barang' => $barang,
@@ -161,7 +162,7 @@ class PenjualanController extends Controller
         $keyword = $request->input('param');
         $id = $request->id_pelanggan;
         $pelanggan = Pelanggan::where('id', $id)->first();
-        $barang = Barang::where('nama', 'LIKE', "%$keyword%")->with(['kategori', 'satuan', 'harga'])->paginate(10);
+        $barang = Barang::where('nama', 'LIKE', "%$keyword%")->with(['kategori', 'satuan', 'harga'])->where('status', 'active')->paginate(10);
         return response()->json([
             'pelanggan' => $pelanggan,
             'barang' => $barang,
@@ -331,6 +332,20 @@ class PenjualanController extends Controller
                 $item->delete();
             }
             Keranjang::truncate();
+
+            // Add Laporan
+            $keterangaN = '';
+            if ($data['sisa'] == 0) {
+                $keterangaN = 'Pembayaran Lunas Pesanan';
+            }else{
+                $keterangaN = 'Pembayaran DP Pesanan';
+            }
+            LaporanPenjualan::create([
+                'keterangan' => $keterangaN,
+                'no_nota' => 'BP' . $data['no_nota'],
+                'masuk' => $data['bayar'],
+                'id_admin' => $idKasir,
+            ]);
         }else{
             toastr()->error('Gagal');
             return redirect()->back()->withInput();
@@ -413,7 +428,7 @@ class PenjualanController extends Controller
                 $snapToken = \Midtrans\Snap::getSnapToken($params);
                 $penjualan->update([
                     'snap_token' => $snapToken,
-                    'bayar' => $bayar + ($bayar * 2 / 100),
+                    'bayar' => $bayar,
                 ]);
                 if ($penjualan->grand_total <= ($bayar + $penjualan->bayar) ) {
                     $penjualan->update([
@@ -425,6 +440,20 @@ class PenjualanController extends Controller
                         'status_bayar' => 'belum'
                     ]);
                 }
+
+                // Add Laporan
+                $keterangaN = '';
+                if ($bayar + $penjualan->bayar == $penjualan->grand_total) {
+                    $keterangaN = 'Pembayaran Lunas Pesanan';
+                }else{
+                    $keterangaN = 'Pembayaran DP Pesanan';
+                }
+                LaporanPenjualan::create([
+                    'keterangan' => $keterangaN,
+                    'no_nota' => $penjualan->no_nota,
+                    'masuk' => $penjualan->grand_total - $penjualan->bayar,
+                    'id_admin' => $penjualan->id_kasir,
+                ]);
             } catch (\Exception $e) {
                 // Log the error or handle it as needed
                 error_log($e->getMessage());
@@ -433,18 +462,37 @@ class PenjualanController extends Controller
             }
             return redirect()->route('penjualan.bayar', $penjualan->id);
         }else{
-            $dt = [
-                'bayar' => $penjualan->grand_total,
-                'sisa' => 0,
-                'status_bayar' => 'lunas',
-            ];
+            if ($penjualan->grand_total == $bayar + $penjualan->bayar) {
+                $dt = [
+                    'bayar' => $penjualan->grand_total,
+                    'sisa' => 0,
+                    'status_bayar' => 'lunas',
+                ];
+            }else{
+                $dt = [
+                    'bayar' => $penjualan->bayar + $penjualan->bayar,
+                    'sisa' => $penjualan->grand_total - $bayar + $penjualan->bayar,
+                ];
+            }
             $penjualan->update($dt);
 
-            toastr()->success('Berhasil');
-    
-            return redirect()->route('penjualan');
+            // Add Laporan
+            $keterangaN = '';
+            if ($bayar == $penjualan->grand_total) {
+                $keterangaN = 'Pembayaran Lunas Pesanan';
+            }else{
+                $keterangaN = 'Pembayaran DP Pesanan';
+            }
+            LaporanPenjualan::create([
+                'keterangan' => $keterangaN,
+                'no_nota' => $penjualan->no_nota,
+                'masuk' => $penjualan->grand_total - $bayar,
+                'id_admin' => $penjualan->id_kasir,
+            ]);
         }
+        toastr()->success('Berhasil');
 
+        return redirect()->route('penjualan');
     }
 
     public function saveToLaporan(string $id){
@@ -461,6 +509,44 @@ class PenjualanController extends Controller
             
             toastr()->success('Berhasil');
     
+            return redirect()->route('penjualan');
+        }
+    }
+    public function saveToLaporan2(string $id, Request $request){
+        $penjualan = Penjualan::where('id', $id)->first();
+        $bayar = $request->bayar;
+
+        if ($penjualan) {
+            if ($penjualan->grand_total == $bayar) {
+                $dt = [
+                    'bayar' => $penjualan->grand_total,
+                    'sisa' => 0,
+                    'status_bayar' => 'lunas',
+                ];
+            }else{
+                $dt = [
+                    'bayar' => $penjualan->bayar,
+                    'sisa' => $penjualan->grand_total - $bayar,
+                    'status_bayar' => 'belum',
+                ];
+            }
+            $penjualan->update($dt);
+
+            // Add Laporan
+            $keterangaN = '';
+            if ($bayar == $penjualan->grand_total) {
+                $keterangaN = 'Pembayaran Lunas Pesanan';
+            }else{
+                $keterangaN = 'Pembayaran DP Pesanan';
+            }
+            LaporanPenjualan::create([
+                'keterangan' => $keterangaN,
+                'no_nota' => $penjualan->no_nota,
+                'masuk' => $penjualan->grand_total - $bayar,
+                'id_admin' => $penjualan->id_kasir,
+            ]);
+            
+            toastr()->success('Berhasil');
             return redirect()->route('penjualan');
         }
     }

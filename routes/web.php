@@ -130,7 +130,7 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
             // simpan penjualan
             Route::post('penjualan/store', 'simpanKeranjang')->name('penjualan.store');
             // simpan ke laporan penjualan
-            Route::post('penjualan/store/{id}', 'saveToLaporan')->name('penjualan.store-selesai.p');
+            Route::post('penjualan/store/{id}', 'saveToLaporan2')->name('penjualan.store-selesai.p');
             Route::post('penjualan/edit/bayar/{id}', 'bayarOnline')->name('penjualan.store-selesai.online');
 
 

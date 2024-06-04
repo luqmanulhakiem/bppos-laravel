@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('laporan_penjualans', function (Blueprint $table) {
             $table->id();
+            $table->string('keterangan');
+            $table->string('no_nota');
+            $table->integer('masuk')->default(0);
+            $table->integer('keluar')->default(0);
+            $table->bigInteger('id_admin');
             $table->timestamps();
         });
     }
