@@ -28,7 +28,7 @@
                 <div class="card-header">
                     <div class="row justify-content-between">
                         <h3 class="card-title">Data Satuan</h3>
-                        <a href="{{route('tambah-satuan')}}" class="btn btn-primary"><i class="fa fa-user-plus"></i> Tambah </a>
+                        {{-- <a href="{{route('tambah-satuan')}}" class="btn btn-primary"><i class="fa fa-user-plus"></i> Tambah </a> --}}
                     </div>
                     <div class="search-bar">
                       <form class="search-form d-flex align-items-center" method="get" action="{{route('cari-satuan')}}">
@@ -45,7 +45,7 @@
                         <th style="width: 10px">#</th>
                         <th>Nama</th>
                         <th>Keterangan</th>
-                        <th class="text-center">Pilihan</th>
+                        {{-- <th class="text-center">Pilihan</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -59,12 +59,12 @@
                               <td>{{$number++}}</td>
                               <td>{{$item->nama}}</td>
                               <td>{{$item->barang_count}} Barang terkait</td>
-                              <td class="text-center">
+                              {{-- <td class="text-center">
                                   <div class="btn-group">
                                       <a href="{{route('edit-satuan', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>
                                       <a href="{{route('hapus-satuan', ['id'=> $item->id])}}" data-confirm-delete="true" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus </a>
                                   </div>
-                              </td>
+                              </td> --}}
                           </tr>
                         @endforeach
                       @else
