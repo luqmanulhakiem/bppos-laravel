@@ -1,74 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Laporan Penjualan</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
 </head>
 <body>
-	<style type="text/css">
-		table tr td,
-		table tr th{
-			font-size: 9pt;
-		}
-	</style>
-	<center>
-		<h5>Laporan Penjualan</h4>
-	</center>
+<table>
+    <tr>
+        {{-- <td> --}}
+            {{-- <img src="{{asset('assets/dist/img/logoo.jpeg')}}" class="img-circle elevation-2" alt="User Image"> --}}
+            {{-- <img src="{{url('storage/konfig/member_card.png')}}" class="img-fluid" alt="User Image"> --}}
+        {{-- </td> --}}
+        <td colspan="3">
+            <h2>BINTANG PRINTAMA</h2>
+            <p>Digital Printing Center</p>
+            <p>Jl. Darma Gg. 1A no.1 Lawangan Daya Pamekasan, No WA : 085233359990, 6285259992877, 6281999600623, 628175160642</p>
+        </td>
+        <td colspan="2">
+            <p>{{$data->created_at}}</p>
+            <p>No Pesanan : {{$data->no_nota}}</p>
+            <p>Kepada Yth: <br> {{$data->pelanggan->nama}}</p>
+        </td>
+    </tr>
+  <tr>
+    <th>No</th>
+    <th>Produk</th>
+    <th>Qty</th>
+    <th>Harga Satuan</th>
+    <th>Subtotal Harga</th>
+  </tr>
+  <?php $num = 1 ?>
+  @foreach ($item as $item)
+      <tr>
+        <td>{{$num}}</td>
+        <td>{{$item->nama}}-, 
+            @if ($item->ukuran == null)
+                {{$item->ukuran_p}} x {{$item->ukuran_l}}
+            @else
+                {{$item->kuantitas}}
+            @endif
+        </td>
+        <td>{{$item->kuantitas}}</td>
+        <td>Rp. {{$item->harga}}</td>
+        <td>Rp. {{$item->total}}</td>
+      </tr>
+  @endforeach
+  <tr>
+    <td colspan="4">Total Harga</td>
+    <td>Rp. 182,000</td>
+  </tr>
+  <tr>
+    <td colspan="4">Diskon</td>
+    <td>Rp. 0</td>
+  </tr>
+  <tr>
+    <td colspan="4">Uang Muka</td>
+    <td>Rp. 0</td>
+  </tr>
+  <tr>
+    <td colspan="4">HARGA FINAL</td>
+    <td>Rp. 182,000</td>
+  </tr>
+  <tr>
+    <td colspan="4">Sisa Bayar</td>
+    <td>Rp. 0</td>
+  </tr>
+  <tr>
+    <td colspan="3">
+        <p>Syarat dan Ketentuan : <br>
+        • Biaya tambahan administrasi pembayaran melalui fitur bank / merchant / PPN, seluruhnya dibebankan kepada pemesan.
+        Jika pesanan tidak diambil melebihi 1 minggu dari waktu yang ditetukan, Hilang / Rusak bukan tanggug jawab kami.</p>
+    </td>
+    <td>
+        <p>Hormat Kami</p>
+        <br><br><hr>
+        <p>Owner</p>
+    </td>
+    <td>
+        <br><br><br><hr>
+        <p>Tanda Terima</p>
+    </td>
+  </tr>
+</table>
+<p>Terima kasih telah berbelanja dan menggunakan jasa kami.</p>
 
-	<table class="table">
-		<tr>
-		  <th>No Nota:</th>
-		  <td>{{$data->no_nota}}</td>
-		</tr>
-		<tr>
-		  <th>Nama Pelanggan:</th>
-		  <td>{{$data->pelanggan->nama}}</td>
-		</tr>
-		<tr>
-		  <th>Grand Total:</th>
-		  <td>{{$data->grand_total}}</td>
-		</tr>
-		<tr>
-			<th>Tanggal Penjualan:</th>
-			<td>{{$data->tgl_penjualan}}</td>
-		  </tr>
-		  <tr>
-			<th>Tanggal Pengambilan:</th>
-			<td>{{$data->tgl_pengambilan}}</td>
-		  </tr>
-	  </table>
- 
-	<table class='table table-bordered'>
-		<thead>
-			<tr>
-				<th>No</th>
-				<th>Kode Barang</th>
-				<th>Nama Barang</th>
-				<th>Ukuran</th>
-				<th>Harga</th>
-				<th>Kuantitas</th>
-			</tr>
-		</thead>
-		<tbody>
-            <?php $number = 1 ?>
-			@foreach($item as $item)
-                <tr>
-                    <td>{{$number++}}</td>
-                    <td>{{$item->kode}}</td>
-                    <td>{{$item->nama}}</td>
-					<td>
-						@if ($item->ukuran == null)
-						{{$item->ukuran_p}} x {{$item->ukuran_l}}
-						@else
-						{{$item->ukuran}}
-						@endif
-					</td>
-					<td>Rp. {{Illuminate\Support\Number::format($item->harga)}}</td>
-					<td>{{$item->kuantitas}}</td>
-                </tr>
-			@endforeach
-		</tbody>
-	</table>
- 
 </body>
 </html>
