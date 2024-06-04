@@ -71,9 +71,13 @@
                               </td>
                               <td class="text-center">
                                   <div class="btn-group">
-                                      {{-- <a href="{{route('edit-barang.stok', ['id'=> $item->id])}}" class="btn btn-sm btn-secondary"><i class="fa fa-edit"></i> Edit Stok</a> --}}
-                                      <a href="{{route('edit-barang', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>
-                                      <a href="{{route('hapus-barang', ['id'=> $item->id])}}" data-confirm-delete="true" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus </a>
+                                    <a href="{{route('edit-barang', ['id'=> $item->id])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>
+                                    <a href="{{route('hapus-barang', ['id'=> $item->id])}}" data-confirm-delete="true" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus </a>
+                                    @if ($item->status == 'active')
+                                      <a href="{{route('barang.status', ['id'=> $item->id, 'status' => 'disable'])}}" class="btn btn-sm btn-secondary"><i class="fa fa-ban"></i> Matikan</a>
+                                      @else
+                                      <a href="{{route('barang.status', ['id'=> $item->id, 'status' => 'active'])}}" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktifkan</a>
+                                    @endif
                                   </div>
                               </td>
                           </tr>

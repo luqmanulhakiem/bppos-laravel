@@ -20,7 +20,6 @@ class BarangController extends Controller
         // mengambil semua data supplier dengan membaginya per 10 list data
         $data = Barang::with('kategori')->with('satuan')->with('harga')->latest()->paginate(10);
 
-        
         // Alert Konfirmasi
         $title = 'Hapus Barang!';
         $text = "Apakah Kamu Yakin, data barang ini memiliki data harga?";
@@ -66,6 +65,15 @@ class BarangController extends Controller
         $kategori = Kategori::get();
         $satuan = Unit::get();
         return view('dashboard.halaman.barang.create', compact(['kategori', 'satuan']));
+    }
+
+    public function status(string $id, string $status){
+        $find = Barang::findorfail($id);
+        $find->update([
+            'status' => $status
+        ]);
+
+        return redirect()->route('barang');
     }
 
     /**

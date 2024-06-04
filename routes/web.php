@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth', 'statusAkun']], function () {
         Route::controller(BarangController::class)->group(function (){
             // index
             Route::get('barang', 'index')->name('barang');
+            Route::get('barang/{id}/{status}', 'status')->name('barang.status');
             // cari
             Route::get('barang/search', 'search')->name('cari-barang');
             // tampilan tambah

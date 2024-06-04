@@ -17,7 +17,7 @@ class BarangSeeder extends Seeder
         $harga = Harga::create([
             'hpp' => '10000',
             'umum' => '30000',
-            'reseller1' => '2000',
+            'reseller1' => '20000',
             'reseller2' => '15000',
         ]);
 
