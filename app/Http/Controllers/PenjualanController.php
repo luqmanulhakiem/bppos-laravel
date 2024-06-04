@@ -82,7 +82,7 @@ class PenjualanController extends Controller
                 'total' => $data['total'],
             ]);
         } else {
-            $data['total'] = (($data['ukuran_p'] * $data['ukuran_l']) * (($data['harga'] - 0) / (100 * 100))) * $data['kuantitas'];
+            $data['total'] = (($data['ukuran_p'] * $data['ukuran_l']) * $data['harga']) * $data['kuantitas'];
             PenjualanItem::create([
                 'id_penjualan' => $data['id_penjualan'],
                 'id_barang' => $data['id_barang'],

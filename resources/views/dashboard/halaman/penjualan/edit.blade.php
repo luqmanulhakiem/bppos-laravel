@@ -161,7 +161,6 @@
                         <th>Ukuran (Cm)</th>
                         <th>Harga</th>
                         <th>Kuantitas</th>
-                        <th>Diskon</th>
                         <th>Total</th>
                         <th class="text-center">Action</th>
                       </tr>
@@ -186,7 +185,6 @@
                               {{-- <td>{{$item->ukuran != null ? $item->ukuran : "$item->ukuran_p" . "x" . $item->ukuran_l}}</td> --}}
                               <td>{{$item->harga}}</td>
                               <td>{{$item->kuantitas}}</td>
-                              <td>{{$item->diskon}}</td>
                               <td>{{$item->total}}</td>
                               <td class="text-center">
                                 <div class="btn-group">
@@ -590,12 +588,13 @@
         if (inptUkuranP <= 0 || inptUkuranL <= 0 || inptKuantitas <= 0) {
           alert('angka tidak boleh 0 atau minus');
         } else {
+          var stok = $('#stok').val();
           var stokP = parseFloat($('#stokP').val());
           var stokL = parseFloat($('#stokL').val());
           console.log('stok p ' + stokP + ' , stok l ' + stokL);
           console.log('input p ' + inptUkuranP + ' , input l ' + inptUkuranL);
-
-          if (parseFloat(inptUkuranP) <= stokP && parseFloat(inptUkuranL) <= stokL){
+          var ukuranPL = parseFloat(inptUkuranP) * parseFloat(inptUkuranL);
+          if (ukuranPL <= stok){
             inptData = {
                 jenis: inptJenis,
                 id_penjualan: inptIdPenjualan,
@@ -607,7 +606,7 @@
               };
             check = 1;
           }else{
-            alert( 'stok tidak cukup, stok barang ini tersisa ' + stokP + ' x ' + stokL);
+            alert( 'stok tidak cukup, stok barang ini tersisa ' + stok);
           }
         }
       }
@@ -648,7 +647,6 @@
                             '<td>' + (value.jenis == 1 ? value.ukuran : (value.ukuran_p + 'x' + value.ukuran_l)) + '</td>' +
                             '<td>' + value.harga + '</td>' +
                             '<td>' + value.kuantitas + '</td>' +
-                            '<td>' + value.diskon + '</td>' +
                             '<td>' + value.total + '</td>' +
                             '<td>' + "<button type='button' id='btnHapus' data-id='" + value.keranjang_id + "' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i> Hapus</button>" + '</td>' +
                           '</tr>';
@@ -730,7 +728,6 @@
                               '<td>' + (value.jenis == 1 ? value.ukuran : (value.ukuran_p + 'x' + value.ukuran_l)) + '</td>' +
                               '<td>' + value.harga + '</td>' +
                               '<td>' + value.kuantitas + '</td>' +
-                              '<td>' + value.diskon + '</td>' +
                               '<td>' + value.total + '</td>' +
                               '<td>' + "<button type='button' id='btnHapus' data-id='" + value.keranjang_id + "' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i> Hapus</button>" + '</td>' + // Ganti dengan atribut yang sesuai
                             '</tr>';
