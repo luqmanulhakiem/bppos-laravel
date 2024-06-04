@@ -22,11 +22,10 @@ class HargaRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'hpp' => 'required',
             'umum' => 'required',
             'reseller1' => 'required',
             'reseller2' => 'required',
-            'reseller3' => 'required',
-            'reseller4' => 'required',
         ];
     }
 }

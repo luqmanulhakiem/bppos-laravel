@@ -46,11 +46,10 @@
                         <th rowspan="2">Kategori</th>
                         <th colspan="7" class="text-center">Harga</th>
                         <tr class="text-center">
+                          <th >Hpp</th>
                           <th >Umum</th>
                           <th >Rsllr1</th>
                           <th >Rsllr2</th>
-                          <th >Rsllr3</th>
-                          <th >Rsllr4</th>
                           <th class="text-center">Pilihan</th>
                         </tr>
 
@@ -67,11 +66,10 @@
                               <td>{{$number++}}</td>
                               <td>{{$item->nama}}</td>
                               <td>{{$item->kategori->nama}}</td>
+                              <td>{{Illuminate\Support\Number::format($item->harga->hpp)}}</td>
                               <td>{{Illuminate\Support\Number::format($item->harga->umum)}}</td>
                               <td>{{Illuminate\Support\Number::format($item->harga->reseller1)}}</td>
                               <td>{{Illuminate\Support\Number::format($item->harga->reseller2)}}</td>
-                              <td>{{Illuminate\Support\Number::format($item->harga->reseller3)}}</td>
-                              <td>{{Illuminate\Support\Number::format($item->harga->reseller4)}}</td>
                               <td class="text-center">
                                   <div class="btn-group">
                                       <a href="{{route('edit-harga', ['id'=> $item->id_harga])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit </a>

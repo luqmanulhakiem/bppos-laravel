@@ -48,6 +48,10 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label>Harga Pokok (HPP)<b class="text-danger">*</b></label>
+                      <input type="number" class="form-control" name="hpp" placeholder="harga hpp" value="{{$data->harga->hpp}}" required>
+                    </div>
+                    <div class="form-group">
                       <label>Harga Umum<b class="text-danger">*</b></label>
                       <input type="number" class="form-control" name="umum" placeholder="harga umum" value="{{$data->harga->umum}}" required>
                     </div>
@@ -59,15 +63,6 @@
                       <label>Harga Reseller 2<b class="text-danger">*</b></label>
                       <input type="number" class="form-control" name="reseller2" placeholder="harga Reseller 2" value="{{$data->harga->reseller2}}" required>
                     </div>
-                    <div class="form-group">
-                      <label>Harga Reseller 3<b class="text-danger">*</b></label>
-                      <input type="number" class="form-control" name="reseller3" placeholder="harga Reseller 3" value="{{$data->harga->reseller3}}" required>
-                    </div>
-                    <div class="form-group">
-                      <label>Harga Reseller 4<b class="text-danger">*</b></label>
-                      <input type="number" class="form-control" name="reseller4" placeholder="harga Reseller 4" value="{{$data->harga->reseller4}}" required>
-                    </div>
-
                     <br>
                     <button class="btn btn-submit btn-primary float-right"><i class="fa fa-save"></i> Simpan</button>
                 </form>

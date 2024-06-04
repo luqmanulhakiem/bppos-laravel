@@ -36,10 +36,9 @@ class HargaController extends Controller
             })
             ->orWhereHas('harga', function ($query) use ($param) {
                 $query->where('umum', 'LIKE', '%' . $param . '%')
+                ->orWhere('hpp', 'LIKE', '%' . $param . '%')
                 ->orWhere('reseller1', 'LIKE', '%' . $param . '%')
-                ->orWhere('reseller2', 'LIKE', '%' . $param . '%')
-                ->orWhere('reseller3', 'LIKE', '%' . $param . '%')
-                ->orWhere('reseller4', 'LIKE', '%' . $param . '%');
+                ->orWhere('reseller2', 'LIKE', '%' . $param . '%');
             });
         })->paginate(10);
 
@@ -73,11 +72,10 @@ class HargaController extends Controller
         if ($find) {
             // List Perubahan Data
             $dt = [
+                'hpp' => $data['hpp'],
                 'umum' => $data['umum'],
                 'reseller1' => $data['reseller1'],
                 'reseller2' => $data['reseller2'],
-                'reseller3' => $data['reseller3'],
-                'reseller4' => $data['reseller4'],
             ];
 
             // Simpan Perubahan Data
