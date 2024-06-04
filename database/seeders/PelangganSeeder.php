@@ -16,8 +16,8 @@ class PelangganSeeder extends Seeder
         
         //  Buat Pelanggan
         $arrayPelanggan = [
-            ['nama' => 'Devi','gender' => 'P','telp' => '12231', 'alamat' => 'Jl. Suka Maju', 'level' => '3'],
-            ['nama' => 'Laily','gender' => 'P','telp' => '1233231', 'alamat' => 'Jl. Suka Jalan', 'level' => '5']
+            ['nama' => 'Devi','gender' => 'P','telp' => '12231', 'alamat' => 'Jl. Suka Maju', 'level' => '1'],
+            ['nama' => 'Laily','gender' => 'P','telp' => '1233231', 'alamat' => 'Jl. Suka Jalan', 'level' => '2']
         ];
         
         foreach ($arrayPelanggan as $data) {

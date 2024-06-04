@@ -62,8 +62,6 @@
                         <option value="0" @if ($data->level == "0") {{ 'selected' }} @endif>Umum</option>
                         <option value="1" @if ($data->level == "1") {{ 'selected' }} @endif>Reseller 1</option>
                         <option value="2" @if ($data->level == "2") {{ 'selected' }} @endif>Reseller 2</option>
-                        <option value="3" @if ($data->level == "3") {{ 'selected' }} @endif>Reseller 3</option>
-                        <option value="4" @if ($data->level == "4") {{ 'selected' }} @endif>Reseller 4</option>
                       </select>
                     </div>
                     <br>

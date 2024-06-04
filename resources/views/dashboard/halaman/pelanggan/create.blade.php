@@ -62,8 +62,6 @@
                         <option value="0">Umum</option>
                         <option value="1">Reseller 1</option>
                         <option value="2">Reseller 2</option>
-                        <option value="3">Reseller 3</option>
-                        <option value="4">Reseller 4</option>
                       </select>
                     </div>
                     <br>
